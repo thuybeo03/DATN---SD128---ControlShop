@@ -8,7 +8,7 @@
           content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
-    <title>Sneaker Shop - Admin</title>
+    <title>Control Shop - Admin</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="/images/img/icon.png">
 
@@ -166,12 +166,12 @@
                             <span class="menu-arrow"></span></a>
                         <ul>
                             <li><a href="/manage/chat-lieu">Chất Liệu</a></li>
-                            <li><a href="/manage/giay" class="active">Giày</a></li>
+                            <li><a href="/manage/giay">Giày</a></li>
                             <li><a href="/manage/hang">Hãng</a></li>
                             <li><a href="/manage/hinh-anh">Hình Ảnh</a></li>
                             <li><a href="/manage/mau-sac">Màu Sắc</a></li>
                             <li><a href="/manage/size">Size</a></li>
-                            <li><a href="/manage/giay/list-detail">Chi Tiết Giày</a></li>
+                            <li><a href="/manage/giay-chi-tiet" class="active">Chi Tiết Giày</a></li>
                         </ul>
                     </li>
                     <li class="submenu">
@@ -207,18 +207,18 @@
 <!--                            <li><a href="/manage/nhan-vien">Nhân Viên</a></li>-->
 <!--                        </ul>-->
 <!--                    </li>-->
-                    <li class="submenu">
-            <a href="javascript:void(0);">
-              <img src="/images/img/icons/transfer1.svg" alt="img"/>
-              <span>Quản lý Khuyến Mãi</span>
-              <span class="menu-arrow"></span>
-            </a>
-            <ul>
-              <li><a href="/manage/voucher-product">Khuyến Mãi Sản Phẩm</a></li>
-              <li><a href="/manage/voucher-bill">Khuyến Mãi Hóa Đơn</a></li>
-              <li><a href="/manage/voucher-ship">Khuyến Mãi Giao Hàng</a></li>
-            </ul>
-          </li>
+<!--                    <li class="submenu">-->
+<!--            <a href="javascript:void(0);">-->
+<!--              <img src="/images/img/icons/transfer1.svg" alt="img"/>-->
+<!--              <span>Quản lý Khuyến Mãi</span>-->
+<!--              <span class="menu-arrow"></span>-->
+<!--            </a>-->
+<!--            <ul>-->
+<!--              <li><a href="/manage/voucher-product">Khuyến Mãi Sản Phẩm</a></li>-->
+<!--              <li><a href="/manage/voucher-bill">Khuyến Mãi Hóa Đơn</a></li>-->
+<!--              <li><a href="/manage/voucher-ship">Khuyến Mãi Giao Hàng</a></li>-->
+<!--            </ul>-->
+<!--          </li>-->
                     <li>
                         <a href="/manage/giao-hang"><i data-feather="layers"></i><span> Quản lý giao hàng</span> </a>
                     </li>
@@ -377,11 +377,10 @@
                                     <th>Size</th>
                                     <th>Màu Sắc</th>
                                     <th>Số Lượng</th>
-                                    <th>Gía Bán (Trước Giảm)</th>
+                                    <th>Giá Bán</th>
                                     <th>Trọng Lượng</th>
                                     <th>Năm Sản Xuất</th>
                                     <th>Năm Bảo Hành</th>
-                                    <th>Gía Bán (Sau Giảm)</th>
                                     <th>Trạng Thái</th>
                                     <th>Action</th>
                                     <th>Thời Gian Thêm</th>
@@ -397,11 +396,10 @@
                                     <td th:text="${items.size.soSize}"></td>
                                     <td th:text="${items.mauSac.tenMau}"></td>
                                     <td th:text="${items.soLuong}"></td>
-                                    <td th:text="${#numbers.formatDecimal(items.soTienTruocKhiGiam, 2, 'COMMA', 1, 'POINT')} + ' đ'"></td>
+                                    <td th:text="${#numbers.formatDecimal(items.giaBan, 2, 'COMMA', 1, 'POINT')} + ' đ'"></td>
                                     <td th:text="${items.trongLuong}+' gram'"></td>
                                     <td th:text="${items.namSX}"></td>
                                     <td th:text="${items.namBH}"></td>
-                                    <td th:text="${#numbers.formatDecimal(items.giaBan, 2, 'COMMA', 1, 'POINT')} + ' đ'"></td>
                                     <td>
                                         <span th:if="${items.trangThai == 1}"
                                               class="badges bg-lightgreen">Hoạt Động</span>

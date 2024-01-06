@@ -78,6 +78,13 @@ public class CheckOutController {
         if (diaChiKHDefault != null){
             session.removeAttribute("diaChiGiaoHang");
             session.setAttribute("diaChiGiaoHang", diaChiKHDefault);
+
+            giaoHang.setTenNguoiNhan(diaChiKHDefault.getTenNguoiNhan());
+            giaoHang.setMaGiaoHang("");
+            giaoHang.setSdtNguoiNhan(diaChiKHDefault.getSdtNguoiNhan());
+            giaoHang.setDiaChiNguoiNhan(diaChiKHDefault.getDiaChiChiTiet());
+
+            giaoHangService.saveGiaoHang(giaoHang);
             hoaDonService.add(hoaDon);
         }
         for (UUID x: selectedProductIds) {
@@ -114,6 +121,7 @@ public class CheckOutController {
         }
 
         hoaDon.setTongSP(sumQuantity);
+        hoaDon.setTongTienSanPham(total);
 
         hoaDonService.add(hoaDon);
 
@@ -125,6 +133,7 @@ public class CheckOutController {
         if (diaChiKHDefault != null){
             Double shippingFee = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
             hoaDon.setTongTien(total + shippingFee);
+            hoaDon.setTienShip(shippingFee);
             hoaDonService.add(hoaDon);
 
             giaoHang.setDiaChiNguoiNhan(diaChiKHDefault.getDiaChiChiTiet());
@@ -133,6 +142,7 @@ public class CheckOutController {
             giaoHangService.saveGiaoHang(giaoHang);
 
             model.addAttribute("shippingFee", shippingFee);
+            model.addAttribute("billPlaceOrder", hoaDon);
             model.addAttribute("toTalOder", total  + shippingFee );
             model.addAttribute("tongTienDaGiamVoucherShip", total + shippingFee);
 
