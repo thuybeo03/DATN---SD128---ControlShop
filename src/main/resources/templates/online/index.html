@@ -115,52 +115,6 @@
             <div class="col-lg-3 col-md-3">
                 <div class="header__nav__option" style="display: flex;justify-content: end;">
 
-
-                    <!--                    <div class="nav user-menu" style="height: 30px;">-->
-
-<!--                        <li class="nav-item dropdown" style="height: 30px;">-->
-<!--                            <a data-bs-toggle="dropdown" href="#" >-->
-<!--                                <img style="margin-bottom: 42px; width: 18px; height: 18px;"   src="/images/img/icon/notification.png" >-->
-<!--                            </a>-->
-<!--                            <span style="position: absolute; height:20px; width: 25px; top: -13px; left: 7px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;" th:text="${soThongBao}"></span>-->
-<!--                            <div class="dropdown-menu notifications" style="width:300px; top: -80px; position: absolute;">-->
-<!--                                <div class="topnav-dropdown-header">-->
-<!--                                    <span class="notification-title">Thông báo</span>-->
-<!--                                    <a class="clear-noti"> Xóa sạch </a>-->
-<!--                                </div>-->
-<!--                                <div class="vertical-scroll scroll-demo" >-->
-<!--                                    <th:block th:if="${x.trangThai != 3}" th:each="x : ${listThongBao}">-->
-<!--                                        <a href="#" class="items-noticafitions">-->
-<!--                                        <div class="items-notica">-->
-<!--                                        <span class="avatar">-->
-<!--                                            <img alt="" src="/images/img/blog/blog-1.jpg">-->
-<!--                                        </span>-->
-<!--                                            <div class="text-notica">-->
-<!--                                                <span class="notica-title" th:text="${fullNameLogin}"></span>-->
-<!--                                                <p class="notica-times">1 phút trước</p>-->
-<!--                                                <input th:if="x.trangThai == 1" checked class="notica-read" type="radio" name="" id="">-->
-<!--                                                <input th:if="x.trangThai == 0">-->
-<!--                                            </div>-->
-<!--                                            <p class="notica-status">-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</p>-->
-<!--                                            <div class="text-contents">-->
-<!--                                                <p class="notica-contents" th:text="${x.noiDungTB}"></p>-->
-<!--                                            </div>-->
-
-
-<!--                                        </div>-->
-<!--                                    </a>-->
-<!--                                    </th:block>-->
-<!--                                </div>-->
-<!--                                <div class="topnav-dropdown-footer">-->
-<!--                                    <a href="activities.html">Xem tất cả thông báo</a>-->
-<!--                                </div>-->
-<!--                            </div>-->
-
-<!--                        </li>-->
-<!--                    </div>-->
-
-                    <!--                    <a th:href="@{'/buyer/fa&recently'}"><img src="/images/img/icon/heart2.png" alt=""></a>-->
-
                     <a th:href="@{'/buyer/cart'}" style="position: relative; display: inline-block; ">
                         <img src="/images/img/icon/cart.png" alt="">
                         <span class="cart-count" style="position: absolute; height:20px; width: 25px; top: -13px; left: 3px;  color: rgb(0, 0, 0) ; font-size: 12px; font-weight: bold;  padding: 4px; border-radius: 50%;" th:text="${sumProductInCart}"></span>
@@ -230,43 +184,6 @@
 
 <!-- Banner Section Begin -->
 <section class="banner spad">
-<!--    <div class="container">-->
-<!--        <div class="row">-->
-<!--            <div class="col-lg-7 offset-lg-4">-->
-<!--                <div class="banner__item">-->
-<!--                    <div class="banner__item__pic">-->
-<!--                        <img src="/images/img/banner/banner-1.jpg" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="banner__item__text">-->
-<!--                        <h2>Clothing Collections 2030</h2>-->
-<!--                        <a href="/buyer/shop">Shop now</a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-5">-->
-<!--                <div class="banner__item banner__item&#45;&#45;middle">-->
-<!--                    <div class="banner__item__pic">-->
-<!--                        <img src="/images/img/banner/banner-2.jpg" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="banner__item__text">-->
-<!--                        <h2>Accessories</h2>-->
-<!--                        <a href="/buyer/shop">Shop now</a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-7">-->
-<!--                <div class="banner__item banner__item&#45;&#45;last">-->
-<!--                    <div class="banner__item__pic">-->
-<!--                        <img src="/images/img/banner/banner-3.jpg" alt="">-->
-<!--                    </div>-->
-<!--                    <div class="banner__item__text">-->
-<!--                        <h2>Shoes Spring 2030</h2>-->
-<!--                        <a href="/buyer/shop">Shop now</a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
 </section>
 <!-- Banner Section End -->
 
@@ -291,18 +208,6 @@
                             <div class="product__item__pic set-bg" style="border-radius:20px;"  th:attr="data-setbg=@{'/images/imgsProducts/' + ${product.hinhAnh}}">
                                 <span class="label">New</span>
                                   <ul class="product__hover">
-                                      <li th:if="${heartLogged}">
-                                          <a th:href="@{'/buyer/heart/' + ${product.idGiay} +'/' + ${product.idMau}}" >
-                                              <img src="/images/img/icon/heart.png" alt="">
-                                              <span>Yêu thích</span>
-                                          </a>
-                                      </li>
-                                      <li>
-                                          <a href="#">
-                                              <img src="/images/img/icon/compare.png" alt="">
-                                              <span>So sánh</span>
-                                          </a>
-                                      </li>
                                       <li >
                                           <a th:href="@{'/buyer/shop-details/' + ${product.idGiay} +'/' + ${product.idMau}}">
                                               <img src="/images/img/icon/view.png" alt="">
@@ -330,19 +235,7 @@
                             <div class="product__item__pic set-bg" style="border-radius:20px;"  th:attr="data-setbg=@{'/images/imgsProducts/' + ${product.hinhAnh}}">
                                 <span class="label">Bán chạy</span>
                                 <ul class="product__hover">
-                                    <li th:if="${heartLogged}">
-                                        <a th:href="@{'/buyer/heart/' + ${product.idGiay} +'/' + ${product.idMau}}" >
-                                            <img src="/images/img/icon/heart.png" alt="">
-                                            <span>Yêu thích</span>
-                                        </a>
-                                    </li>
                                     <li>
-                                        <a href="#">
-                                            <img src="/images/img/icon/compare.png" alt="">
-                                            <span>So sánh</span>
-                                        </a>
-                                    </li>
-                                    <li >
                                         <a th:href="@{'/buyer/shop-details/' + ${product.idGiay} +'/' + ${product.idMau}}">
                                             <img src="/images/img/icon/view.png" alt="">
                                             <span>Xem chi tiết</span>
@@ -372,18 +265,6 @@
                             <div class="product__item__pic set-bg" style="border-radius:20px;"  th:attr="data-setbg=@{'/images/imgsProducts/' + ${product.hinhAnh}}">
                                 <span class="label">Khuyến mãi</span>
                                 <ul class="product__hover">
-                                    <li th:if="${heartLogged}">
-                                        <a th:href="@{'/buyer/heart/' + ${product.idGiay} +'/' + ${product.idMau}}" >
-                                            <img src="/images/img/icon/heart.png" alt="">
-                                            <span>Yêu thích</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <img src="/images/img/icon/compare.png" alt="">
-                                            <span>So sánh</span>
-                                        </a>
-                                    </li>
                                     <li>
                                         <a th:href="@{'/buyer/shop-details/' + ${product.idGiay} +'/' + ${product.idMau}}">
                                             <img src="/images/img/icon/view.png" alt="">
@@ -416,49 +297,6 @@
 
 <!-- Categories Section Begin -->
 <section class="categories spad">
-<!--    <div class="container">-->
-<!--        <div class="row">-->
-<!--            <div class="col-lg-3">-->
-<!--                <div class="categories__text">-->
-<!--                    <h2>Clothings Hot <br /> <span>Shoe Collection</span> <br /> Accessories</h2>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-4">-->
-<!--                <div class="categories__hot__deal">-->
-<!--                    <img src="/images/img/imgsProducts/product-23.0.png" alt="">-->
-<!--                    <div class="hot__deal__sticker">-->
-<!--                        <span>Sale Of</span>-->
-<!--                        <h5>$29.99</h5>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-4 offset-lg-1">-->
-<!--                <div class="categories__deal__countdown">-->
-<!--                    <span>Deal Of The Week</span>-->
-<!--                    <h2>LA Big Ball Chunky</h2>-->
-<!--                    <div class="categories__deal__countdown__timer" id="countdown">-->
-<!--                        <div class="cd-item">-->
-<!--                            <span>3</span>-->
-<!--                            <p>Days</p>-->
-<!--                        </div>-->
-<!--                        <div class="cd-item">-->
-<!--                            <span>1</span>-->
-<!--                            <p>Hours</p>-->
-<!--                        </div>-->
-<!--                        <div class="cd-item">-->
-<!--                            <span>50</span>-->
-<!--                            <p>Minutes</p>-->
-<!--                        </div>-->
-<!--                        <div class="cd-item">-->
-<!--                            <span>18</span>-->
-<!--                            <p>Seconds</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <a href="/buyer/shop" class="primary-btn">Shop now</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
 </section>
 <!-- Categories Section End -->
 

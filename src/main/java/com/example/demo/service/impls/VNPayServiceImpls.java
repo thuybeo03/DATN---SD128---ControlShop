@@ -3,6 +3,7 @@ package com.example.demo.service.impls;
 import com.example.demo.config.VNPayConfig;
 import com.example.demo.service.VNPayService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -10,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@Service
 public class VNPayServiceImpls implements VNPayService {
     @Override
     public String createOrder(Integer total, String orderInfor, String urlReturn){

@@ -47,6 +47,9 @@ public class CheckOutController {
     @Autowired
     private GiaoHangService giaoHangService;
 
+    @Autowired
+    private VNPayService vnPayService;
+
     @PostMapping("/checkout")
     private String checkOutCart(Model model, @RequestParam("selectedProducts") List<UUID> selectedProductIds){
 
@@ -338,29 +341,39 @@ public class CheckOutController {
         }
 
         if (hinhThucThanhToan.equals("QRCodeBanking")){
+
+            String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+
+            double doubleNumber = hoaDon.getTongTien();
+            int total = (int) doubleNumber;
+            String vnpayUrl = vnPayService.createOrder(total, "orderInfo", baseUrl);
+
             hoaDon.setHinhThucThanhToan(1);
             hoaDon.setTrangThai(0);
             hoaDonService.add(hoaDon);
 
-            UserForm(model);
+            return "redirect:" + vnpayUrl;
 
-            model.addAttribute("maHD", hoaDon.getMaHD());
-            model.addAttribute("thongTinThanhToan", true);
+//            return "online/checkout";
 
-            model.addAttribute("addNewAddressNull", true);
-            model.addAttribute("addNewAddressNulll", false);
+//            UserForm(model);
+//
+//            model.addAttribute("maHD", hoaDon.getMaHD());
+//            model.addAttribute("thongTinThanhToan", true);
+//
+//            model.addAttribute("addNewAddressNull", true);
+//            model.addAttribute("addNewAddressNulll", false);
+//
+//            LichSuThanhToan lichSuThanhToan =  new LichSuThanhToan();
+//            lichSuThanhToan.setTgThanhToan(new Date());
+//            lichSuThanhToan.setSoTienThanhToan(hoaDon.getTongTien());
+//            lichSuThanhToan.setNoiDungThanhToan("Đặt hàng " + hoaDon.getMaHD() + " hình thức thanh toán QRCode Baking");
+//            lichSuThanhToan.setKhachHang(khachHang);
+//            lichSuThanhToan.setHoaDon(hoaDon);
+//            lichSuThanhToan.setMaLSTT("LSTT" + khachHang.getMaKH() + generateRandomNumbers());
+//            lichSuThanhToan.setTrangThai(0);
+//            lsThanhToanService.addLSTT(lichSuThanhToan);
 
-            LichSuThanhToan lichSuThanhToan =  new LichSuThanhToan();
-            lichSuThanhToan.setTgThanhToan(new Date());
-            lichSuThanhToan.setSoTienThanhToan(hoaDon.getTongTien());
-            lichSuThanhToan.setNoiDungThanhToan("Đặt hàng " + hoaDon.getMaHD() + " hình thức thanh toán QRCode Baking");
-            lichSuThanhToan.setKhachHang(khachHang);
-            lichSuThanhToan.setHoaDon(hoaDon);
-            lichSuThanhToan.setMaLSTT("LSTT" + khachHang.getMaKH() + generateRandomNumbers());
-            lichSuThanhToan.setTrangThai(0);
-            lsThanhToanService.addLSTT(lichSuThanhToan);
-
-            return "online/checkout";
         }else{
             hoaDon.setHinhThucThanhToan(0);
             hoaDon.setTrangThai(1);

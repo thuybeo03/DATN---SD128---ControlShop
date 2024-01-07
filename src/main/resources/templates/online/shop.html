@@ -114,13 +114,6 @@
           <ul>
             <li><a th:href="@{'/buyer/'}" >Trang Chủ</a></li>
             <li class="active"><a th:href="@{'/buyer/shop'}" >Cửa Hàng</a></li>
-<!--            <li><a th:href="@{'/buyer/about'}">About Us</a></li>-->
-<!--            <li><a th:href="@{'/buyer/blog'}">Blog</a>-->
-<!--              <ul class="dropdown">-->
-<!--                <li><a th:href="@{'/buyer/blog/blog-details'}">Blog Details</a></li>-->
-<!--              </ul>-->
-<!--            </li>-->
-<!--            <li><a th:href="@{'/buyer/contact'}">Contact</a></li>-->
           </ul>
         </nav>
       </div>
@@ -324,14 +317,7 @@
                 <div class="product__item">
                   <div class="product__item__pic set-bg" style="border-radius: 10px;"  th:attr="data-setbg=@{'/images/imgsProducts/' + ${product.hinhAnh}}">
                     <ul class="product__hover">
-                      <li th:if="${heartLogged}">
-                        <a th:href="@{'/buyer/heart/' + ${product.idGiay} +'/' + ${product.idMau}}" >
-                          <img src="/images/img/icon/heart.png" alt="">
-                          <span>Yêu thích</span>
-                        </a>
-                      </li>
-                      <li><a href="#"><img src="/images/img/icon/compare.png" alt=""><span>So sánh</span></a></li>
-                      <li>
+                       <li>
                         <a th:href="@{'/buyer/shop-details/' + ${product.idGiay} +'/' + ${product.idMau}}">
                           <img src="/images/img/icon/view.png" alt=""><span>Chi tiết</span>
                         </a>
@@ -357,13 +343,10 @@
         <div th:if="${showPage}" class="row">
           <div class="col-lg-12">
             <div th:if="${pageNumber}" class="product__pagination">
-
               <th:block th:each="i : ${#numbers.sequence(1, totalPage)}">
                 <a class="active" th:href="@{'/buyer/shop?pageNum=' + ${i}}" th:text="${i}"></a>
               </th:block>
-
             </div>
-
             <div th:if="${pageNumberHTL}" class="product__pagination">
               <th:block th:each="i : ${#numbers.sequence(1, totalPageHTL)}">
                 <a class="active" th:href="@{'/buyer/shop/highToLow?pageNum=' + ${i}}" th:text="${i}"></a>
@@ -382,8 +365,6 @@
         </div>
 
         <div class="row product__filter">
-
-
           <th:block th:each="product : ${listCTGModelSoldOff}">
             <div   class="col-lg-4 col-md-6 col-sm-6">
               <div class="product__item">

@@ -432,7 +432,6 @@
                                         <span style="margin-left: 20px; margin-top: -20px;" th:text="'Phân loại: ' + ${product.chiTietGiay.mauSac.tenMau} +' | Size:' + ${product.chiTietGiay.size.soSize} "></span>
                                         <span style="margin-left: 20px; margin-top: -20px;"  th:text="'x' + ${product.soLuong}"></span>
                                     </div>
-
                                 </div>
                                 <div class="col-sm-3" style="display: flex;">
                                     <p th:if="${product.donGia != product.donGiaTruocGiam}" th:text="'₫' + ${#numbers.formatDecimal(product.donGiaTruocGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="color: #b7b7b7;text-decoration: line-through; margin-right: 30px;"></p>
@@ -443,8 +442,7 @@
                         </th:block>
 
                         <div style="display: flex;">
-                            <div class="col-sm-6">
-                            </div>
+                            <div class="col-sm-6"></div>
                             <div class="col-sm-4" style="display: block;">
                                 <p>Tổng tiền hàng</p>
                                 <p>Phí vận chuyển</p>
@@ -560,14 +558,17 @@
 
                     <div class="row coupon__code" style="margin-bottom: 30px;">
                         <div class="col-lg-8">
-                            <p th:text="'Dự kiến nhận hàng vào ' + ${#dates.format(billDetailShip.tgNhanDK, 'yyyy-MM-dd')}"></p>
+                            <p th:text="'Dự kiến nhận hàng vào ' + ${#dates.format(billDetailShip.giaoHang.tgNhanDK, 'yyyy-MM-dd')}"></p>
                             <p style="font-size: 10pt; margin-top: 100px;">Mọi chi tiết xin liên hệ tới tổng đài <b>0384329003</b> để được nhân viên CSKH tư vấn</p>
                         </div>
                         <div class="col-lg-4">
                             <div style="display: grid;">
                                 <button style="border: 0.3px solid black; height: 40px; background-color: #e4e1db;">Chờ</button>
                                 <button data-toggle="modal" data-target="#modalHuyHoaDon" style="border: 0.3px solid black; margin: 20px 0 20px 0; height: 40px;">Hủy Đơn Hàng</button>
-                                <button data-toggle="modal" data-target="#modalThayDoiPhuongThucThanhToan" style="border: 0.3px solid black; height: 40px;">Thay Đổi Phương Thức Thanh Toán</button>
+<!--                                a-->
+                                <button  style="border: 0.3px solid black; height: 40px;">Thay Đổi Phương Thức Thanh Toán</button>
+<!--                                data-toggle="modal" data-target="#modalThayDoiPhuongThucThanhToan"-->
+<!--                                b-->
                             </div>
                         </div>
                     </div>
@@ -575,10 +576,10 @@
                     <div style="margin-bottom: 30px;" class="row coupon__code">
                         <div class="col-lg-4">
                             <a style=" font-size: 14pt;">Địa chỉ nhận hàng</a>
-                            <a style="color: #17178b; cursor: pointer" th:if="${billDetailShip.soLanThayDoiViTriShip < 1}" data-toggle="modal" data-target="#thongBaoThayDoiDiaChiNhan">Thay đổi</a>
-                            <p style="font-weight: 600; margin-top: 20px;" th:text="${billDetailShip.tenNguoiNhan}"></p>
-                            <p style="font-weight: 500; font-size: 10pt; margin-top: -5px;" th:text="${billDetailShip.sdtNguoiNhan}"></p>
-                            <p style="font-size: 9pt; font-weight: 400; margin-top: -15px;" th:text="${billDetailShip.diaChiNguoiNhan}"></p>
+<!--                            <a style="color: #17178b; cursor: pointer" th:if="${billDetailShip.soLanThayDoiViTriShip < 1}" data-toggle="modal" data-target="#thongBaoThayDoiDiaChiNhan">Thay đổi</a>-->
+                            <p style="font-weight: 600; margin-top: 20px;" th:text="${billDetailShip.giaoHang.tenNguoiNhan}"></p>
+                            <p style="font-weight: 500; font-size: 10pt; margin-top: -5px;" th:text="${billDetailShip.giaoHang.sdtNguoiNhan}"></p>
+                            <p style="font-size: 9pt; font-weight: 400; margin-top: -15px;" th:text="${billDetailShip.giaoHang.diaChiNguoiNhan}"></p>
                         </div>
                         <div class="col-lg-9" style="border-left: 0.5px solid black;">
                             <th:block th:each="x: ${listViTriDonHang}">
@@ -616,7 +617,6 @@
 
                                 </div>
                                 <div class="col-sm-3" style="display: flex;">
-                                    <p th:if="${product.donGia != product.donGiaTruocGiam}" th:text="'₫' + ${#numbers.formatDecimal(product.donGiaTruocGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="color: #b7b7b7;text-decoration: line-through; margin-right: 30px;"></p>
                                     <p th:text="'₫' + ${#numbers.formatDecimal(product.donGia, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 </div>
                             </div>
@@ -629,19 +629,12 @@
                             <div class="col-sm-4" style="display: block;">
                                 <p>Tổng tiền hàng</p>
                                 <p>Phí vận chuyển</p>
-                                <p>Giảm giá phí vận chuyển</p>
-                                <p>Giảm giá hóa đơn</p>
                                 <p style="font-size: 13pt; font-weight: 600;">Thành tiền</p>
                             </div>
                             <div class="col-sm-2" style="display: block;">
-                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailShip.tongTien - billDetailShip.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailShip.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'+ ₫' + ${#numbers.formatDecimal(billDetailShip.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
 
-                                <p th:if="${billDetailShip.giamGiaShip == 0}">- ₫ 0</p>
-                                <p th:if="${billDetailShip.giamGiaHoaDon == 0}">- ₫ 0</p>
-
-                                <p th:if="${billDetailShip.giamGiaShip != 0}" th:text="'- ₫' + ${#numbers.formatDecimal(billDetailShip.giamGiaShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                <p th:if="${billDetailShip.giamGiaHoaDon != 0}" th:text="'- ₫' + ${#numbers.formatDecimal(billDetailShip.giamGiaHoaDon, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billDetailShip.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
                             </div>
                         </div>
@@ -764,7 +757,6 @@
                                     <button type="submit" style=" color: black; text-align: center;
                                                  align-items: center; height: 40px; width: 130px; border: 0.5px solid black; background-color: #f0f0f0">Yêu Cầu Hoàn Hàng/Tiền</button>
                                 </form>
-                                <button  style="border: 0.3px solid black; margin: 20px 0 20px 0; height: 40px;">Yêu Cầu Hoàn Hàng/Tiền</button>
                             </div>
                         </div>
                     </div>
@@ -772,9 +764,9 @@
                     <div style="margin-bottom: 30px;" class="row coupon__code">
                         <div class="col-lg-4">
                             <a style=" font-size: 14pt;">Địa chỉ nhận hàng</a>
-                            <p style="font-weight: 600; margin-top: 20px;" th:text="${billDetailRecieve.tenNguoiNhan}"></p>
-                            <p style="font-weight: 500; font-size: 10pt; margin-top: -5px;" th:text="${billDetailRecieve.sdtNguoiNhan}"></p>
-                            <p style="font-size: 9pt; font-weight: 400; margin-top: -15px;" th:text="${billDetailRecieve.diaChiNguoiNhan}"></p>
+                            <p style="font-weight: 600; margin-top: 20px;" th:text="${billDetailRecieve.giaoHang.tenNguoiNhan}"></p>
+                            <p style="font-weight: 500; font-size: 10pt; margin-top: -5px;" th:text="${billDetailRecieve.giaoHang.sdtNguoiNhan}"></p>
+                            <p style="font-size: 9pt; font-weight: 400; margin-top: -15px;" th:text="${billDetailRecieve.giaoHang.diaChiNguoiNhan}"></p>
                         </div>
                         <div class="col-lg-8" style="border-left: 0.5px solid black;">
 
@@ -814,7 +806,6 @@
 
                                 </div>
                                 <div class="col-lg-3">
-                                    <p th:unless="${product.donGiaTruocGiam == product.donGia}" th:text="'₫' + ${#numbers.formatDecimal(product.donGiaTruocGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="color: #b7b7b7;text-decoration: line-through; margin-right: 30px;"></p>
                                     <p th:text="'₫' + ${#numbers.formatDecimal(product.donGia, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 </div>
                             </div>
@@ -827,15 +818,11 @@
                             <div class="col-sm-4" style="display: block;">
                                 <p>Tổng tiền hàng</p>
                                 <p>Phí vận chuyển</p>
-                                <p>Giảm giá phí vận chuyển</p>
-                                <p>Giảm giá hóa đơn</p>
                                 <p style="font-size: 13pt; font-weight: 600;">Thành tiền</p>
                             </div>
                             <div class="col-sm-2" style="display: block;">
-                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailRecieve.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailRecieve.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billDetailRecieve.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailRecieve.giamGiaShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailRecieve.giamGiaHoaDon, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billDetailRecieve.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
                             </div>
                         </div>
@@ -913,9 +900,9 @@
                         <div class="row coupon__code" style="margin-bottom: 30px;">
                             <div class="col-lg-6">
                                 <a style=" font-size: 14pt;">Địa chỉ nhận hàng</a>
-                                <p style="font-weight: 600; margin-top: 20px;" th:text="${billDetailCancel.tenNguoiNhan}"></p>
-                                <p style="font-weight: 500; font-size: 10pt; margin-top: -5px;" th:text="${billDetailCancel.sdtNguoiNhan}"></p>
-                                <p style="font-size: 9pt; font-weight: 400; margin-top: -15px;" th:text="${billDetailCancel.diaChiNguoiNhan}"></p>
+                                <p style="font-weight: 600; margin-top: 20px;" th:text="${billDetailCancel.giaoHang.tenNguoiNhan}"></p>
+                                <p style="font-weight: 500; font-size: 10pt; margin-top: -5px;" th:text="${billDetailCancel.giaoHang.sdtNguoiNhan}"></p>
+                                <p style="font-size: 9pt; font-weight: 400; margin-top: -15px;" th:text="${billDetailCancel.giaoHang.diaChiNguoiNhan}"></p>
                             </div>
                             <div class="col-lg-6" style="border-left: 0.5px solid black;">
                                 <th:block th:each="x: ${listViTriDonHang}">
@@ -953,7 +940,6 @@
 
                                     </div>
                                     <div class="col-lg-3">
-                                        <p th:unless="${product.donGiaTruocGiam == product.donGia}" th:text="'₫' + ${#numbers.formatDecimal(product.donGiaTruocGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="color: #b7b7b7;text-decoration: line-through; margin-right: 30px;"></p>
                                         <p th:text="'₫' + ${#numbers.formatDecimal(product.donGia, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                     </div>
                                 </div>
@@ -966,15 +952,11 @@
                                 <div class="col-sm-4" style="display: block;">
                                     <p>Tổng tiền hàng</p>
                                     <p>Phí vận chuyển</p>
-                                    <p>Giảm giá phí vận chuyển</p>
-                                    <p>Giảm giá hóa đơn</p>
                                     <p style="font-size: 13pt; font-weight: 600;">Thành tiền</p>
                                 </div>
                                 <div class="col-sm-2" style="display: block;">
-                                    <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCancel.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                    <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCancel.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                     <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCancel.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                    <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCancel.giamGiaShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                    <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCancel.giamGiaHoaDon, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                     <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCancel.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
                                 </div>
                             </div>
@@ -1070,37 +1052,12 @@
 
                     </div>
 
-                    <div class="row coupon__code" style="margin-bottom: 30px;">
-                        <div class="col-lg-8">
-                            <p>Nếu hàng nhận được có vấn đề, bạn có thể gửi yêu cầu Trả hàng/Hoàn tiền trước
-                                <b th:text="${#dates.format(ngayKetThucHoanHang, 'HH:mm yyyy-MM-dd')}"></b></p>
-                        </div>
-                        <div class="col-lg-4">
-                            <div style="display: grid;">
-                                <button data-toggle="modal" data-target="#modalDanhGiaDonHang" style="border: 0.3px solid black; height: 40px; width: 243px;">Đánh Giá</button>
-
-                                <a th:if="${billDetailCompleted.trangThaiHoan != 9 }" th:href="@{'/buyer/purchaser/bill/detail/refund/' + ${billDetailCompleted.idHD}}"
-                                   style=" color: black; text-align: center; padding-top: 9px; align-items: center; height: 50px;border: 0.3px solid black;height: 40px; width: 243px;
-                                    border: 0.5px solid black; margin: 20px 20px 20px 0; background-color: #f0f0f0"> Xem chi tiết Hoàn/Đổi Hàng</a>
-
-                                <form th:if="${ngayKetThucHoanHang.after(#dates.createNow()) and billDetailCompleted.trangThaiHoan == 9}" th:action="@{'/buyer/purchaser/bill/refund/' + ${billDetailCompleted.idHD}}" method="post">
-                                    <button style="border: 0.3px solid black; margin: 20px 0 20px 0; height: 40px; width: 243px;" type="submit">Yêu Cầu Hoàn Hàng/Tiền</button>
-                                </form>
-
-                                <button th:if="${ngayKetThucHoanHang.before(#dates.createNow())}" style="border: 0.3px solid black; margin: 20px 0 20px 0; height: 40px; width: 243px;"> Hết hạn yêu Cầu Hoàn Hàng/Tiền</button>
-
-                                <a th:href="@{'/buyer/purchaser/bill/buy/again/' + ${billDetailCompleted.idHD}}"  style=" color: black; text-align: center; padding-top: 9px; align-items: center;
-                                 height: 40px; width: 243px; border: 0.5px solid black; margin-right: 20px; background-color: #f0f0f0;">Mua Lại</a>
-                            </div>
-                        </div>
-                    </div>
-
                     <div style="margin-bottom: 30px;" class="row coupon__code">
                         <div class="col-lg-3">
                             <a style=" font-size: 14pt;">Địa chỉ nhận hàng</a>
-                            <p style="font-weight: 600; margin-top: 20px;" th:text="${billDetailCompleted.tenNguoiNhan}"></p>
-                            <p style="font-weight: 500; font-size: 10pt; margin-top: -5px;" th:text="${billDetailCompleted.sdtNguoiNhan}"></p>
-                            <p style="font-size: 9pt; font-weight: 400; margin-top: -15px;" th:text="${billDetailCompleted.diaChiNguoiNhan}"></p>
+                            <p style="font-weight: 600; margin-top: 20px;" th:text="${billDetailCompleted.giaoHang.tenNguoiNhan}"></p>
+                            <p style="font-weight: 500; font-size: 10pt; margin-top: -5px;" th:text="${billDetailCompleted.giaoHang.sdtNguoiNhan}"></p>
+                            <p style="font-size: 9pt; font-weight: 400; margin-top: -15px;" th:text="${billDetailCompleted.giaoHang.diaChiNguoiNhan}"></p>
                         </div>
                         <div class="col-lg-9" style="border-left: 0.5px solid black;">
                             <th:block th:each="x: ${listViTriDonHang}">
@@ -1138,8 +1095,7 @@
                                 </div>
 
                                 <div class="col-lg-3">
-                                    <p th:unless="${product.donGiaTruocGiam == product.donGia}" th:text="'₫' + ${#numbers.formatDecimal(product.donGiaTruocGiam, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="color: #b7b7b7;text-decoration: line-through; margin-right: 30px;"></p>
-                                    <p th:text="'₫' + ${#numbers.formatDecimal(product.donGia, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                     <p th:text="'₫' + ${#numbers.formatDecimal(product.donGia, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 </div>
                             </div>
 
@@ -1151,15 +1107,11 @@
                             <div class="col-sm-4" style="display: block;">
                                 <p>Tổng tiền hàng</p>
                                 <p>Phí vận chuyển</p>
-                                <p>Giảm giá phí vận chuyển</p>
-                                <p>Giảm giá hóa đơn</p>
                                 <p style="font-size: 13pt; font-weight: 600;">Thành tiền</p>
                             </div>
                             <div class="col-sm-2" style="display: block;">
-                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCompleted.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCompleted.tongTienSanPham, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCompleted.tienShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCompleted.giamGiaShip, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCompleted.giamGiaHoaDon, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                 <p th:text="'₫' + ${#numbers.formatDecimal(billDetailCompleted.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 13pt; font-weight: 600;"></p>
                             </div>
                         </div>
@@ -1378,8 +1330,9 @@
                                         <div style="display: flex; margin-right: 20px;">
                                             <a th:href="@{'/buyer/purchase/bill/detail/' + ${x.idHD}}" style=" color: black; text-align: center; padding-top: 12px; align-items: center; height: 50px; width: 130px; border: 0.5px solid black; margin-right: 20px; background-color: #f0f0f0;">Xem chi tiết</a>
                                             <a th:if="${x.trangThai == 3 or x.trangThai == 4 }" th:href="@{'/buyer/purchaser/bill/buy/again/' + ${x.idHD}}"  style=" color: black; text-align: center; padding-top: 12px; align-items: center; height: 50px; width: 130px; border: 0.5px solid black; margin-right: 20px; background-color: #f0f0f0;">Mua lại</a>
-<!--                                            <a th:if="${x.trangThai == 3 and x.soLanDanhGia < 1}" th:data-bs-toggle="modal"-->
-<!--                                               th:data-bs-target="'#modalDanhGia' + ${x.idHD}"  style=" color: black; text-align: center; padding-top: 12px; align-items: center; height: 50px; width: 130px; border: 0.5px solid black; margin-right: 20px; background-color: #f0f0f0;">Đánh giá</a>-->
+                                            <a th:if="${x.trangThai == 1 or x.trangThai == 0}" th:href="@{'/buyer/purchase/bill/detail/cancel/' + ${x.idHD}}"
+                                               style=" color: black; text-align: center; padding-top: 12px; align-items: center;
+                                               height: 50px; width: 130px; border: 0.5px solid black; margin-right: 20px; background-color: #f0f0f0;">Hủy đơn hàng</a>
                                         </div>
                                     </div>
                                 </div>
@@ -1631,48 +1584,6 @@
                 </div>
 <!--                Purchase End-->
 
-<!--                Notification Begin-->
-                <div th:if="${pageNotificationUser}" class="card">
-                    <div class="card-body">
-
-                        <div class="row" style="background-color: #f3f2ee; height: 80px; width: 836px; border-radius: 5px; margin-top: -10px;">
-                        </div>
-                        <div class="row"
-                             style="margin-top: 5px; background-color: #f3f2ee; width: 836px ;  border-radius: 5px; height: 175px;">
-                        </div>
-
-                    </div>
-                </div>
-<!--                Notification End-->
-
-<!--                Voucher Begin-->
-                <div th:if="${pageVoucherUser}" class="card">
-                    <div class="card-body">
-
-                        <div class="row" style="background-color: #f3f2ee; height: 80px; width: 836px; border-radius: 5px; margin-top: -10px;">
-                        </div>
-                        <div class="row"
-                             style="margin-top: 5px; background-color: #f3f2ee; width: 836px ;  border-radius: 5px; height: 175px;">
-                        </div>
-
-                    </div>
-                </div>
-<!--                Voucher End-->
-
-<!--                Coins Begin-->
-                <div th:if="${pageCoinsUser}" class="card">
-                    <div class="card-body">
-
-                        <div class="row" style="background-color: #f3f2ee; height: 80px; width: 836px; border-radius: 5px; margin-top: -10px;">
-                        </div>
-                        <div class="row"
-                             style="margin-top: 5px; background-color: #f3f2ee; width: 836px ;  border-radius: 5px; height: 175px;">
-                        </div>
-
-                    </div>
-                </div>
-<!--                Coins End-->
-
             </div>
 
         </div>
@@ -1820,165 +1731,6 @@
         </div>
     </div>
 <!--    Thêm địa chỉ end-->
-
-<!--    Thông tin thanh toán begin-->
-    <div class="modal fade" id="modalQRCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document" style="width: 1170px;"  >
-            <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Thông tin thanh toán</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body" style="width: 1170px;" >
-                        <div th:if="${detailBillPay}" th:object="${billDetailPay}">
-
-                            <div class="row"  style="background-color: #f3f2ee;">
-                                <div class="col-lg-4" style="padding: 20px;">
-                                    <img src="/images/imgBanking/HumanBank.png" style="height: 360px; width: 322px; margin-left: 20px;" alt="">
-                                    <p style="margin:15px 0 0 20px;">One day we have our own bank, our own 人 transportation unit to support in the best way.  </p>
-                                </div>
-                                <div class="col-lg-8">
-
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="row" style="display: block; margin: 30px 0 0 10px;border-right: 0.5px solid black;">
-                                                <p style="font-weight: 700;">THÔNG TIN TÀI KHOẢN</p>
-                                                <p>Tên chủ tài khoản : <p style="font-weight: 700;">PHAM HUU NHAN</p> </p>
-                                                <p>Số tài khoản : 0384329003</p>
-                                                <p>Ngân hàng HumanBank</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="row" style="display: block; margin: 30px 0 0 10px;">
-                                                <p style="font-weight: 700;">NỘI DUNG THANH TOÁN</p>
-                                                <p style="display: flex;">NỘI DUNG CHUYỂN KHOẢN  </p>
-
-                                                <p style="font-weight: 700; border: 0.5px solid black; padding: 10px; width: 250px;" th:text="${billDetailPay.maHD}"></p>
-
-                                                <p>Số Tiền</p>
-
-                                                <p style="font-weight: 700; border: 0.5px solid black; padding: 10px; width: 150px;" th:text="'₫' + ${#numbers.formatDecimal(billDetailPay.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row" style="margin: 20px 20px 0 0; ">
-                                        <p><b>Cách 1.</b> Để thanh toán tiền NHANH (xác nhận trong 5 phút), Quý khách sử dụng ứng dụng Internet Banking quét mã QR-CODE bên dưới và nhập <b>NỘI DUNG THÔNG TIN THANH TOÁN.</b></p>
-                                        <p><b>Cách 2.</b> Nếu ứng dụng Internet Banking của Quý khách không có chức năng quét mã QR-CODE, vui lòng thực hiện chuyển khoản theo <b> NỘI DUNG THÔNG TIN THANH TOÁN.</b> </p>
-                                        <p>Mọi chi tiết xin liên hệ tới tổng đài <b>0384329003</b> để được nhân viên CSKH tư vấn</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
-                    </div>
-            </div>
-        </div>
-    </div>
-<!--    Thông tin thanh toán end-->
-
-<!--    Modal thông báo quy định trả hàng begin-->
-    <div class="modal fade" id="thongBaoQuyDinhTraHang" tabindex="-1" role="dialog" aria-labelledby="messAddThanhCongTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="messAddThanhCongTitle" >Quy định hoàn trả hàng !</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-                <div style="align-items: center; text-align: center; width: 465px; margin-top: 10px; margin-bottom: 10px;">
-                    <p style="text-align: center; margin-bottom: 20px; color :red;">Lưu ý: Trường hợp yêu cầu Trả hàng Hoàn tiền của bạn được chấp nhận, Voucher có thể sẽ không được hoàn lại</p>
-                    <p style="text-align: center; margin-bottom: 20px;">*Phí hoàn hàng của mỗi sản phẩm sẽ được tính theo tổng tiền mà bạn đã trả cho cửa hàng</p>
-                    <p style="text-align: center; margin-bottom: 20px;">(Tổng tiền mà bạn đã trả bao gồm tổng tiền sản phẩm, phí giao hàng, giảm giá hóa đơn và giảm giá giao hàng) </p>
-                </div>
-
-                <div style="display: flex;">
-                    <input type="checkbox" >
-                    <p style="margin-right: 20px;">Tôi đồng ý với điều khoản</p>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--    Modal thông báo quy định trả hàng end-->
-
-<!--  List Thông tin thanh toán begin-->
-    <th:block th:each="x : ${listHoaDonChoThanhToan}">
-        <div class="modal fade" th:id="'modalQRCode' + ${x.idHD}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document" style="width: 1170px;" >
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Thông tin thanh toán</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body" >
-
-                        <div class="row"  style="background-color: #f3f2ee;">
-                            <div class="col-lg-4" style="padding: 20px;">
-                                <img src="/images/imgBanking/HumanBank.png" style="height: 360px; width: 322px; margin-left: 20px;" alt="">
-                                <p style="margin:15px 0 0 20px;">One day we have our own bank, our own 人 transportation unit to support in the best way.  </p>
-                            </div>
-                            <div class="col-lg-8">
-
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="row" style="display: block; margin: 30px 0 0 10px;border-right: 0.5px solid black;">
-                                            <p style="font-weight: 700;">THÔNG TIN TÀI KHOẢN</p>
-                                            <p>Tên chủ tài khoản : <p style="font-weight: 700;">PHAM HUU NHAN</p> </p>
-                                            <p>Số tài khoản : 0384329003</p>
-                                            <p>Ngân hàng HumanBank</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="row" style="display: block; margin: 30px 0 0 10px;">
-
-                                            <p style="font-weight: 700;">NỘI DUNG THANH TOÁN</p>
-                                            <p style="display: flex;">NỘI DUNG CHUYỂN KHOẢN</p>
-                                            <p style="font-weight: 700; border: 0.5px solid black; padding: 10px; width: 250px;" th:text="${x.maHD}"></p>
-                                            <p>Số Tiền</p>
-                                            <p style="font-weight: 700; border: 0.5px solid black; padding: 10px; width: 150px;" th:text="'₫' + ${#numbers.formatDecimal(x.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row" style="margin: 20px 20px 0 0; ">
-                                    <p><b>Cách 1.</b> Để thanh toán tiền NHANH (xác nhận trong 5 phút), Quý khách sử dụng ứng dụng Internet Banking quét mã QR-CODE bên dưới và nhập <b>NỘI DUNG THÔNG TIN THANH TOÁN.</b></p>
-                                    <p><b>Cách 2.</b> Nếu ứng dụng Internet Banking của Quý khách không có chức năng quét mã QR-CODE, vui lòng thực hiện chuyển khoản theo <b> NỘI DUNG THÔNG TIN THANH TOÁN.</b> </p>
-                                    <p>Mọi chi tiết xin liên hệ tới tổng đài <b>0384329003</b> để được nhân viên CSKH tư vấn</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </th:block>
-<!--  List Thông tin thanh toán end-->
 
 <!--    Thay đổi phương thức thanh toán begin-->
     <div th:if="${modalThayDoiPhuongThucThanhToan}" class="modal fade" id="modalThayDoiPhuongThucThanhToan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -2210,13 +1962,6 @@
                             </div>
 
                             <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex;">
-                                    <input type="radio" value="changeVoucher" checked style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thêm/thay đổi mã giảm giá</p>
-                                </div>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
                                 <div style="margin-left: 50px; display: flex; margin-right: 50px;">
                                     <input type="radio" value="changeSize" style="height: 20px; width: 20px;" name="lyDoHuy">
                                     <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thay đổi size/ màu</p>
@@ -2259,7 +2004,7 @@
         <!--       Modal Hủy chờ thanh toán end-->
 
         <!--        Modal hủy chờ giao hàng begin-->
-        <div th:if="${detailBillShip}" class="modal-dialog modal-dialog-centered" role="document" th:object="${billDetailShip}" >
+        <div th:if="${detailBillShip}" class="modal-dialog modal-dialog-centered" role="document" style="width: 600px;" th:object="${billDetailShip}" >
             <form th:action="@{'/buyer/purchase/bill/pay/cancel/' + ${billDetailShip.idHD}}" method="post">
                 <div class="modal-content" >
 
@@ -2275,13 +2020,6 @@
 
                             <div class="row" style="margin: 0 0 30px 0;">
                                 <p style="margin: 0 0 0 10px; font-size: 9pt; font-weight: 500; color: red">*Nếu bạn đã thanh toán, tiền thanh toán sẽ được hoàn vào tài khoản trong 24h</p>
-                            </div>
-
-                            <div class="row" style="margin: 15px 0 15px 0;">
-                                <div style="margin-left: 50px; display: flex;">
-                                    <input type="radio" value="changeVoucher" checked style="height: 20px; width: 20px;" name="lyDoHuy">
-                                    <p style="margin: 0 0 0 30px; font-size: 12pt; font-weight: 500;">Tôi muốn thêm/thay đổi mã giảm giá</p>
-                                </div>
                             </div>
 
                             <div class="row" style="margin: 15px 0 15px 0;">

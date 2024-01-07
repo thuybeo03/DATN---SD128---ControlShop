@@ -669,77 +669,6 @@ public class UserController {
         return "redirect:/buyer/cart";
     }
 
-//    @PostMapping("/purchase/bill/complete/rate/{idHD}")
-//    private String danhGiaSanPham(Model model, @PathVariable UUID idHD,
-//                                              @RequestParam("imagesRequest") List<MultipartFile> files,
-//                                              @RequestParam("soDiem") Integer soDiem,
-//                                              @RequestParam("moTaDanhGia") String moTaDanhGia) {
-//
-//        HoaDon hoaDon = hoaDonService.getOne(idHD);
-//        List<String> tenAnh = new ArrayList<>();
-//
-//        try {
-//            for (MultipartFile file : files) {
-//                if (file !=null){
-//                    String originalFilename = file.getOriginalFilename();
-//
-//                    String newFileName = generateNewFileName(originalFilename);
-//
-//                    tenAnh.add(newFileName);
-//
-//                    String filePath = "F:/Final_Fpoly/SD74---Sneaker-Shop/src/main/resources/static/images/imagesRate/" + newFileName;
-//                    File dest = new File(filePath);
-//
-//                    File parentDirectory = dest.getParentFile();
-//                    if (!parentDirectory.exists() && !parentDirectory.mkdirs()) {
-//                        throw new IOException("Không thể tạo thư mục: " + parentDirectory);
-//                    }
-//                    file.transferTo(dest);
-//                }
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        List<HoaDonChiTiet> hoaDonChiTietList = hoaDon.getHoaDonChiTiets();
-//
-//        for (HoaDonChiTiet x : hoaDonChiTietList) {
-//            ChiTietGiay chiTietGiay = x.getChiTietGiay();
-//
-//            DanhGiaKhachHang danhGiaKhachHang = new DanhGiaKhachHang();
-//
-//            danhGiaKhachHang.setGiay(chiTietGiay.getGiay());
-//            danhGiaKhachHang.setTrangThai(1);
-//            danhGiaKhachHang.setHoaDon(hoaDon);
-//            danhGiaKhachHang.setAnhDG(tenAnh.get(0));
-//            if (tenAnh.size() == 2){
-//                danhGiaKhachHang.setAnhDG2(tenAnh.get(1));
-//            }
-//            if (tenAnh.size() == 3){
-//                danhGiaKhachHang.setAnhDG2(tenAnh.get(1));
-//                danhGiaKhachHang.setAnhDG3(tenAnh.get(2));
-//            }
-//            danhGiaKhachHang.setSoSao(soDiem);
-//            danhGiaKhachHang.setNoiDungDG(moTaDanhGia);
-//            danhGiaKhachHang.setTgDG(new Date());
-//            danhGiaServices.addDanhGia(danhGiaKhachHang);
-//        }
-//
-//        hoaDon.setSoLanDanhGia(1);
-//        hoaDonService.add(hoaDon);
-//
-//        return "redirect:/buyer/home";
-//    }
-
-    @PostMapping("/purchase/bill/refund/confirm/{idHD}")
-    private String confirmBillRefund(Model model, @PathVariable UUID idHD){
-
-        String dvvc = request.getParameter("donViNhanHang");
-        String maVanDon = request.getParameter("maVanDon");
-        return "redirect:/buyer/";
-    }
-
     @PostMapping("/purchase/bill/add/address/get/{idHD}")
     private String addAddressNhanHang(Model model,
                                       @PathVariable UUID idHD,
@@ -893,20 +822,6 @@ public class UserController {
         String extension = parts[parts.length - 1];
         return "yeu_cau_hoan_hang_" + timestamp + "." + extension;
     }
-
-//    private void showThongBao(Model model, KhachHang khachHang){
-//        int soThongBao = 0;
-//
-//        List<ThongBaoKhachHang> thongBaoKhachHangs =  thongBaoServices.findByKhachHang(khachHang);
-//        for (ThongBaoKhachHang x: thongBaoKhachHangs) {
-//            if (x.getTrangThai() == 1){
-//                soThongBao++;
-//            }
-//        }
-//
-//        model.addAttribute("soThongBao", soThongBao);
-//        model.addAttribute("listThongBao", thongBaoKhachHangs);
-//    }
 
 }
 
