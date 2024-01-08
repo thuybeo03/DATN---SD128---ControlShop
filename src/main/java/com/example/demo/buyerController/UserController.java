@@ -533,126 +533,119 @@ public class UserController {
         String lyDoHuy = request.getParameter("lyDoHuy");
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-        DiaChiKH diaChiKHDefault = diaChiKHService.findDCKHDefaulByKhachHang(khachHang);
-
         HoaDon hoaDonHuy = hoaDonService.getOne(idHD);
 
-        Date date = new Date();
-        HoaDon hoaDonNew = new HoaDon();
-
-        String maHD = "HD_" + khachHang.getMaKH()+ date.getDate() + generateRandomNumbers();
+        LichSuThanhToan lichSuThanhToan =  new LichSuThanhToan();
+        lichSuThanhToan.setTgThanhToan(new Date());
+        lichSuThanhToan.setSoTienThanhToan(hoaDonHuy.getTongTien());
+        lichSuThanhToan.setNoiDungThanhToan(hoaDonHuy.getMaHD());
+        lichSuThanhToan.setKhachHang(khachHang);
+        lichSuThanhToan.setHoaDon(hoaDonHuy);
+        lichSuThanhToan.setMaLSTT("LSTT" + khachHang.getMaKH() + generateRandomNumbers());
+        lichSuThanhToan.setLoaiTT(0);
 
          if(lyDoHuy.equals("changeProduct")){
             lyDoHuy = "Tôi muốn thay đổi sản phẩm";
-            hoaDonHuy.setTrangThai(4);
-//            hoaDonHuy.setLyDoHuy(lyDoHuy);
-//            hoaDonHuy.setTgHuy(new Date());
-            hoaDonService.add(hoaDonHuy);
 
+            GiaoHang giaoHang = hoaDonHuy.getGiaoHang();
+            giaoHang.setLyDoHuy(lyDoHuy);
+            giaoHang.setTgHuy(new Date());
+            giaoHangService.saveGiaoHang(giaoHang);
 
             if (hoaDonHuy.getHinhThucThanhToan() == 1){
-
-            }else{
+                if (hoaDonHuy.getTrangThai() == 1){
+                    lichSuThanhToan.setTrangThai(3);
+                    lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng đã thanh toán ");
+                    lsThanhToanService.addLSTT(lichSuThanhToan);
+                }else if(hoaDonHuy.getTrangThai() == 0){
+                    lichSuThanhToan.setTrangThai(2);
+                    lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng chưa thanh toán ");
+                    lsThanhToanService.addLSTT(lichSuThanhToan);
+                }
             }
 
-            LichSuThanhToan lichSuThanhToan =  new LichSuThanhToan();
-            lichSuThanhToan.setTgThanhToan(new Date());
-            lichSuThanhToan.setSoTienThanhToan(hoaDonHuy.getTongTien());
-            lichSuThanhToan.setNoiDungThanhToan(hoaDonHuy.getMaHD());
-            lichSuThanhToan.setKhachHang(khachHang);
-            lichSuThanhToan.setHoaDon(hoaDonHuy);
-            lichSuThanhToan.setMaLSTT("LSTT" + khachHang.getMaKH() + generateRandomNumbers());
-            lichSuThanhToan.setTrangThai(0);
-            lichSuThanhToan.setLoaiTT(0);
-            lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng ");
-            lsThanhToanService.addLSTT(lichSuThanhToan);
-
+             hoaDonHuy.setTrangThai(4);
+             hoaDonService.add(hoaDonHuy);
         }else if(lyDoHuy.equals("none")){
             lyDoHuy = "Tôi không  có nhu cầu mua nữa";
-            hoaDonHuy.setTrangThai(4);
-//            hoaDonHuy.setLyDoHuy(lyDoHuy);
-//            hoaDonHuy.setTgHuy(new Date());
-            hoaDonService.add(hoaDonHuy);
-            if (hoaDonHuy.getTrangThai() == 1){
-            }else{
-            }
-            LichSuThanhToan lichSuThanhToan =  new LichSuThanhToan();
-            lichSuThanhToan.setTgThanhToan(new Date());
-            lichSuThanhToan.setSoTienThanhToan(hoaDonHuy.getTongTien());
-            lichSuThanhToan.setNoiDungThanhToan(hoaDonHuy.getMaHD());
-            lichSuThanhToan.setKhachHang(khachHang);
-            lichSuThanhToan.setHoaDon(hoaDonHuy);
-            lichSuThanhToan.setMaLSTT("LSTT" + khachHang.getMaKH() + generateRandomNumbers());
-            lichSuThanhToan.setTrangThai(0);
-            lichSuThanhToan.setLoaiTT(0);
-            lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng ");
-            lsThanhToanService.addLSTT(lichSuThanhToan);
+            GiaoHang giaoHang = hoaDonHuy.getGiaoHang();
+            giaoHang.setLyDoHuy(lyDoHuy);
+            giaoHang.setTgHuy(new Date());
+            giaoHangService.saveGiaoHang(giaoHang);
 
+             if (hoaDonHuy.getTrangThai() == 1){
+                 lichSuThanhToan.setTrangThai(3);
+                 lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng đã thanh toán ");
+                 lsThanhToanService.addLSTT(lichSuThanhToan);
+             }else if(hoaDonHuy.getTrangThai() == 0){
+                 lichSuThanhToan.setTrangThai(2);
+                 lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng chưa thanh toán ");
+                 lsThanhToanService.addLSTT(lichSuThanhToan);
+             }
+             hoaDonHuy.setTrangThai(4);
+             hoaDonService.add(hoaDonHuy);
         }else if (lyDoHuy.equals("lyDoKhac")) {
             lyDoHuy = request.getParameter("hutThuocNenDauDaDay");
-            hoaDonHuy.setTrangThai(4);
-//            hoaDonHuy.setLyDoHuy(lyDoHuy);
-//            hoaDonHuy.setTgHuy(new Date());
-            hoaDonService.add(hoaDonHuy);
-            if (hoaDonHuy.getHinhThucThanhToan() == 1){
-            }else{
-            }
+            GiaoHang giaoHang = hoaDonHuy.getGiaoHang();
+            giaoHang.setLyDoHuy(lyDoHuy);
+            giaoHang.setTgHuy(new Date());
+            giaoHangService.saveGiaoHang(giaoHang);
 
-            LichSuThanhToan lichSuThanhToan =  new LichSuThanhToan();
-            lichSuThanhToan.setTgThanhToan(new Date());
-            lichSuThanhToan.setSoTienThanhToan(hoaDonHuy.getTongTien());
-            lichSuThanhToan.setNoiDungThanhToan(hoaDonHuy.getMaHD());
-            lichSuThanhToan.setKhachHang(khachHang);
-            lichSuThanhToan.setHoaDon(hoaDonHuy);
-            lichSuThanhToan.setMaLSTT("LSTT" + khachHang.getMaKH() + generateRandomNumbers());
-            lichSuThanhToan.setTrangThai(0);
-            lichSuThanhToan.setLoaiTT(0);
-            lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng ");
-            lsThanhToanService.addLSTT(lichSuThanhToan);
-
+             if (hoaDonHuy.getTrangThai() == 1){
+                 lichSuThanhToan.setTrangThai(3);
+                 lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng đã thanh toán ");
+                 lsThanhToanService.addLSTT(lichSuThanhToan);
+             }else if(hoaDonHuy.getTrangThai() == 0){
+                 lichSuThanhToan.setTrangThai(2);
+                 lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng chưa thanh toán");
+                 lsThanhToanService.addLSTT(lichSuThanhToan);
+             }
+             hoaDonHuy.setTrangThai(4);
+             hoaDonService.add(hoaDonHuy);
         }else if(lyDoHuy.equals("changeSize")) {
             lyDoHuy = request.getParameter("hutThuocNenDauDaDay");
-            hoaDonHuy.setTrangThai(4);
-//            hoaDonHuy.setLyDoHuy(lyDoHuy);
-//            hoaDonHuy.setTgHuy(new Date());
 
-            hoaDonService.add(hoaDonHuy);
-            LichSuThanhToan lichSuThanhToan =  new LichSuThanhToan();
-            lichSuThanhToan.setTgThanhToan(new Date());
-            lichSuThanhToan.setSoTienThanhToan(hoaDonHuy.getTongTien());
-            lichSuThanhToan.setNoiDungThanhToan(hoaDonHuy.getMaHD());
-            lichSuThanhToan.setKhachHang(khachHang);
-            lichSuThanhToan.setHoaDon(hoaDonHuy);
-            lichSuThanhToan.setMaLSTT("LSTT" + khachHang.getMaKH() + generateRandomNumbers());
-            lichSuThanhToan.setTrangThai(0);
-            lichSuThanhToan.setLoaiTT(0);
-            lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng ");
-            lsThanhToanService.addLSTT(lichSuThanhToan);
+
+            GiaoHang giaoHang = hoaDonHuy.getGiaoHang();
+            giaoHang.setLyDoHuy(lyDoHuy);
+            giaoHang.setTgHuy(new Date());
+            giaoHangService.saveGiaoHang(giaoHang);
+
+             if (hoaDonHuy.getTrangThai() == 1){
+                 lichSuThanhToan.setTrangThai(3);
+                 lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng đã thanh toán");
+                 lsThanhToanService.addLSTT(lichSuThanhToan);
+             }else if(hoaDonHuy.getTrangThai() == 0){
+                 lichSuThanhToan.setTrangThai(2);
+                 lichSuThanhToan.setNoiDungThanhToan("Hủy đơn hàng chưa thanh toán");
+                 lsThanhToanService.addLSTT(lichSuThanhToan);
+             }
+             hoaDonHuy.setTrangThai(4);
+             hoaDonService.add(hoaDonHuy);
         }
-
-
     return "redirect:/buyer/purchase/cancel";
 
     }
 
     @GetMapping("/purchase/bill/pay/{idHD}")
     private String payBill(Model model, @PathVariable UUID idHD){
-
         HoaDon hoaDon = hoaDonService.getOne(idHD);
-
         String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-
         double doubleNumber = hoaDon.getTongTien();
         int total = (int) doubleNumber;
-        String vnpayUrl = vnPayService.createOrder(total, "orderInfo", baseUrl);
 
+        String vnpayUrl = vnPayService.createOrder(total, "orderInfo", baseUrl);
         hoaDon.setHinhThucThanhToan(1);
         hoaDon.setTrangThai(0);
         hoaDonService.add(hoaDon);
 
+        session.removeAttribute("HoaDonThanhToanNhanNgu");
+        session.setAttribute("HoaDonThanhToanNhanNgu", hoaDon);
+
         return "redirect:" + vnpayUrl;
 
     }
+
     @GetMapping("/purchaser/bill/buy/again/{idHD}")
     private String buyAgain(Model model, @PathVariable UUID idHD){
         HoaDon hoaDonBuyAgain = hoaDonService.getOne(idHD);

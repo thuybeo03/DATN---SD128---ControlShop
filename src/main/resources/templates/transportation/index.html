@@ -296,8 +296,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Mã Hóa Đơn</th>
-                                                        <th>Thời gian tạo</th>
-                                                        <th>Loại Hóa Đơn</th>
+                                                        <th>Thời gian tạo</th> 
                                                         <th>Thanh Toán</th>
                                                         <th>Trạng thái</th>
                                                         <th>Khách hàng</th>
@@ -312,46 +311,29 @@
                                                         <tr >
                                                             <td th:text="${x.maHD}"></td>
                                                             <td th:text="${#dates.format(x.tgTao, 'HH:mm yyyy-MM-dd')}"></td>
-
-                                                            <td th:unless="${x.idHDOld == null}" style="color: #ff9f43;"> HĐ Hoàn Hàng</td>
-                                                            <td th:if="${x.idHDOld == null}"> HĐ Mua Hàng</td>
-
+ 
 <!--                                                         Hóa đơn thường begin-->
-                                                            <td th:if="${x.trangThai == 2 and x.idHDOld == null}">Chưa Thanh toán</td>
-                                                            <td th:if="${x.trangThai == 3 and x.idHDOld == null}">Đã thanh toán</td>
-                                                            <td th:if="${x.trangThai == 4 and x.idHDOld == null}">Đã Thanh toán</td>
+                                                            <td th:if="${x.trangThai == 2 }">Chưa Thanh toán</td>
+                                                            <td th:if="${x.trangThai == 3 }">Đã thanh toán</td>
+                                                            <td th:if="${x.trangThai == 4 }">Đã Thanh toán</td>
 
-                                                            <td th:if="${x.trangThai == 2 and x.idHDOld == null}">Đang giao</td>
-                                                            <td th:if="${x.trangThai == 3 and x.idHDOld == null}" style="color: #0875eb;" >Thành công</td>
-                                                            <td th:if="${x.trangThai == 4 and x.idHDOld == null}" style="color: #e01627;">Đã hủy</td>
+                                                            <td th:if="${x.trangThai == 2 }">Đang giao</td>
+                                                            <td th:if="${x.trangThai == 3 }" style="color: #0875eb;" >Thành công</td>
+                                                            <td th:if="${x.trangThai == 4 }" style="color: #e01627;">Đã hủy</td>
 <!--                                                         Hóa đơn thường end-->
 
-<!--                                                         Hóa đơn hoàn hàng begin-->
-                                                            <td th:if="${x.idHDOld != null}">......</td>
-
-                                                            <td th:if="${x.trangThai == 1 and x.idHDOld != null}">Chờ hoàn</td>
-                                                            <td th:if="${x.trangThai == 2 and x.idHDOld != null}">Đang hoàn</td>
-                                                            <td th:if="${x.trangThai == 3 and x.idHDOld != null}" style="color: #0875eb;" >Thành công</td>
-                                                            <td th:if="${x.trangThai == 4 and x.idHDOld != null}" style="color: #e01627;">Đã hủy</td>
-<!--                                                         Hóa đơn hoàn hàng end-->
-
-
-                                                            <td th:text="${x.tenNguoiNhan}"></td>
+                                                            <td th:text="${x.giaoHang.tenNguoiNhan}"></td>
                                                             <td th:text="${x.tongSP}"></td>
-                                                            <td th:text="'₫'+${#numbers.formatDecimal(x.tongTienDG, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                                            <td th:text="'₫'+${#numbers.formatDecimal(x.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
                                                             <th>
                                                                 <i class="fe fe-eye" th:data-bs-toggle="modal"
                                                                    th:data-bs-target="'#modalAll' + ${x.idHD}" style="cursor: pointer; margin: 0 10px 0 20px; color: #ff9f43;"></i>
-                                                                <a th:if="${x.idHDOld == null}" th:href="@{'http://localhost:8081/order/bill/print/' + ${x.idHD}}"
+                                                                <a th:href="@{'http://localhost:8081/order/bill/print/' + ${x.idHD}}"
                                                                    onclick="window.open(this.href, '_blank'); return false;">
                                                                     <i class="fe fe-printer" data-bs-toggle="tooltip" title="" style="cursor: pointer; color: #ff9f43;"
                                                                        data-bs-original-title="In hóa đơn" aria-label="fe fe-printer"></i>
                                                                 </a>
-                                                                <a th:unless="${x.idHDOld == null}" th:href="@{'http://localhost:8081/order/bill/refund/print/' + ${x.idHD}}"
-                                                                   onclick="window.open(this.href, '_blank'); return false;">
-                                                                    <i class="fe fe-printer" data-bs-toggle="tooltip" title="" style="cursor: pointer; color: #ff9f43;"
-                                                                       data-bs-original-title="In hóa đơn" aria-label="fe fe-printer"></i>
-                                                                </a>
+
                                                             </th>
                                                         </tr>
                                                     </th:block>
@@ -393,11 +375,6 @@
                                                href="#solid-rounded-justified-tab4"
                                                data-bs-toggle="tab">Đơn hàng mua hàng</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link"
-                                               href="#solid-rounded-justified-tab5"
-                                               data-bs-toggle="tab">Đơn hàng hoàn hàng</a>
-                                        </li>
                                     </ul>
                                     <div th:if="${showHTGH}" class="row" th:object="${HoaDonVanChuyen}" style="border: 0.5px solid #ff9f43; margin: 50px 0 50px 0" >
                                         <div class="col-md-8">
@@ -413,7 +390,7 @@
                                                     <div class="col-lg-2 col-sm-12 col-12">
                                                         <div class="form-group">
                                                             <label>Số tiền :</label>
-                                                            <p style="font-size: 11pt; font-weight: 600;" th:text="'₫'+${#numbers.formatDecimal(HoaDonVanChuyen.tongTienDG, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+                                                            <p style="font-size: 11pt; font-weight: 600;" th:text="'₫'+${#numbers.formatDecimal(HoaDonVanChuyen.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-3 col-sm-12 col-12">
@@ -432,7 +409,7 @@
                                                     <div class="col-lg-12 col-sm-12 col-12">
                                                         <div class="form-group">
                                                             <label>Địa chỉ nhận:</label>
-                                                            <p style="font-size: 11pt; font-weight: 600;" th:text="${HoaDonVanChuyen.diaChiNguoiNhan}"></p>
+                                                            <p style="font-size: 11pt; font-weight: 600;" th:text="${HoaDonVanChuyen.giaoHang.diaChiNguoiNhan}"></p>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4 col-sm-12 col-12">
@@ -440,8 +417,7 @@
                                                             <label>Tên đơn vị vận chuyển</label>
                                                             <p th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" style="font-size: 11pt; font-weight: 600;" th:text="${HoaDonVanChuyen.giaoHang.tenDVVC}"></p>
                                                             <select th:if="${HoaDonVanChuyen.giaoHang.tenDVVC == null}" id="deliveryOptions" class="form-control" name="donViVanChuyen">
-                                                                <option value="humanExpress" selected>Human Express</option>
-                                                                <option value="ghn" >Giao hàng nhanh</option>
+                                                                <option value="ghn" selected>Giao hàng nhanh</option>
                                                                 <option value="ghtk" >Giao Hàng Tiết Kiệm</option>
                                                                 <option value="viettelPost" >Viettel Post</option>
                                                                 <option value="ahamove" >Ahamove</option>
@@ -760,56 +736,20 @@
                                                         </thead>
                                                         <tbody>
                                                         <th:block th:each="x: ${hoaDonDGList}">
-                                                            <tr th:if="${x.idHDOld == null}">
+                                                            <tr>
                                                                 <td th:text="${x.maHD}"></td>
                                                                 <td th:text="${x.tgTao}"></td>
                                                                 <td th:if="${x.giaoHang.tenDVVC == null}">Chưa lấy/gửi hàng</td>
                                                                 <td th:if="${x.giaoHang.tenDVVC != null}">Đang giao</td>
-                                                                <td th:text="${x.tenNguoiNhan}"></td>
+                                                                <td th:text="${x.giaoHang.tenNguoiNhan}"></td>
                                                                 <td th:text="${x.tongSP}"></td>
-                                                                <td th:text="'₫'+${#numbers.formatDecimal(x.tongTienDG, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
+                                                                <td th:text="'₫'+${#numbers.formatDecimal(x.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
                                                                 <th>
                                                                     <a th:href="@{'/order/delivery/update/' + ${x.idHD}}">
                                                                         <i class="fe fe-edit-3" data-bs-original-title="Cập nhật giao hàng"
                                                                            data-bs-toggle="tooltip" title="" style="cursor: pointer; margin-left: 20px; color: #ff9f43;"></i>
                                                                     </a>
                                                                 </th>
-                                                            </tr>
-                                                        </th:block>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane" id="solid-rounded-justified-tab5" >
-                                            <div class="row">
-                                                <div class="vertical-scroll scroll-demo">
-                                                    <table class="table  datanew ">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="position: sticky; top: 0;background-color: #209de3; color: white;">Mã Hóa Đơn</th>
-                                                                <th style="position: sticky; top: 0;background-color: #209de3; color: white;">Thời gian tạo</th>
-                                                                <th style="position: sticky; top: 0;background-color: #209de3; color: white;">Trạng thái</th>
-                                                                <th style="position: sticky; top: 0;background-color: #209de3; color: white;">Khách hàng</th>
-                                                                <th style="position: sticky; top: 0;background-color: #209de3; color: white;">Tổng SP</th>
-                                                                <th style="position: sticky; top: 0;background-color: #209de3; color: white;">Tổng tiền</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <th:block th:each="x: ${hoaDonDGList}">
-                                                            <tr th:if="${x.idHDOld != null}">
-                                                                <td th:text="${x.maHD}"></td>
-                                                                <td th:text="${x.tgTao}"></td>
-
-                                                                <td style="color: #0875eb;"
-                                                                    th:unless="${x.trangThaiHoan == 5 or x.trangThaiHoan == 4}">Hoàn thành công</td>
-                                                                <td th:if="${x.trangThaiHoan == 5}">Đang hoàn</td>
-                                                                <td th:if="${x.trangThaiHoan == 4}">Chờ Hoàn</td>
-                                                                <td style="color: #d81324;" th:if="${x.trangThaiHoan == 3}">Hủy</td>
-
-                                                                <td th:text="${x.tenNguoiNhan}"></td>
-                                                                <td th:text="${x.tongSP}"></td>
-                                                                <td th:text="'₫'+${#numbers.formatDecimal(x.tongTienDG, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
                                                             </tr>
                                                         </th:block>
                                                         </tbody>
@@ -1004,11 +944,11 @@
                                                             <td th:text="${x.maHD}"></td>
                                                             <td th:text="${x.tgTao}"></td>
 
-                                                            <td th:if="${x.trangThai == 3 and x.idHDOld == null}" style="color: #219edf;">Thành công</td>
-                                                            <td th:if="${x.trangThai == 4 and x.idHDOld == null}" style="color: #fe2857;">Hủy đơn</td>
+                                                            <td th:if="${x.trangThai == 3 }" style="color: #219edf;">Thành công</td>
+                                                            <td th:if="${x.trangThai == 4 }" style="color: #fe2857;">Hủy đơn</td>
 
-                                                            <td th:if="${x.trangThai == 3 and x.idHDOld != null}" style="color: #0875eb;" >Thành công</td>
-                                                            <td th:if="${x.trangThai == 4 and x.idHDOld != null}" style="color: #e01627;">Đã hủy</td>
+                                                            <td th:if="${x.trangThai == 3 }" style="color: #0875eb;" >Thành công</td>
+                                                            <td th:if="${x.trangThai == 4 }" style="color: #e01627;">Đã hủy</td>
 
 
                                                             <td th:unless="${x.idHDOld == null}" style="color: #ff9f43;"> HĐ Hoàn Hàng</td>
@@ -1019,11 +959,11 @@
 
                                                             <td th:text="'₫'+${#numbers.formatDecimal(x.tongTienDG, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
 
-                                                            <td  th:if="${x.trangThai == 3 and x.idHDOld == null}" th:text="${#dates.format(x.tgNhan, 'HH:mm yyyy-MM-dd')}"></td>
-                                                            <td  th:if="${x.trangThai == 4 and x.idHDOld == null}"  th:text="${#dates.format(x.tgHuy, 'HH:mm yyyy-MM-dd')}"></td>
+                                                            <td  th:if="${x.trangThai == 3 }" th:text="${#dates.format(x.tgNhan, 'HH:mm yyyy-MM-dd')}"></td>
+                                                            <td  th:if="${x.trangThai == 4 }"  th:text="${#dates.format(x.tgHuy, 'HH:mm yyyy-MM-dd')}"></td>
 
-                                                            <td th:text="${#dates.format(x.tgNhan, 'HH:mm yyyy-MM-dd')}" th:if="${x.trangThai == 3 and x.idHDOld != null}" style="color: #0875eb;" >Thành công</td>
-                                                            <td th:text="${#dates.format(x.tgNhan, 'HH:mm yyyy-MM-dd')}" th:if="${x.trangThai == 4 and x.idHDOld != null}" style="color: #e01627;">Đã hủy</td>
+                                                            <td th:text="${#dates.format(x.tgNhan, 'HH:mm yyyy-MM-dd')}" th:if="${x.trangThai == 3 }" style="color: #0875eb;" >Thành công</td>
+                                                            <td th:text="${#dates.format(x.tgNhan, 'HH:mm yyyy-MM-dd')}" th:if="${x.trangThai == 4 }" style="color: #e01627;">Đã hủy</td>
 
                                                             <th>
                                                                 <a th:if="${x.trangThai == 4 and x.giaoHang.trangThai == 2}" th:href="@{'/order/return/' + ${x.idHD}}">
@@ -1070,7 +1010,7 @@
                         <div class="col-lg-3 col-sm-12 col-12">
                             <div class="form-group">
                                 <label>Số tiền :</label>
-                                <p th:text="'₫'+${#numbers.formatDecimal(x.tongTienDG, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 11pt; font-weight: 6600;" ></p>
+                                <p th:text="'₫'+${#numbers.formatDecimal(x.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" style="font-size: 11pt; font-weight: 6600;" ></p>
                             </div>
                         </div>
 

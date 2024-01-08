@@ -394,22 +394,20 @@ public class CheckOutController {
         int paymentStatus = vnPayService.orderReturn(request);
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
 
-        String orderInfo = request.getParameter("vnp_OrderInfo");
+        if (hoaDon == null){
+            hoaDon = (HoaDon) session.getAttribute("HoaDonThanhToanNhanNgu");
+        }
+
         String paymentTime = request.getParameter("vnp_PayDate");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         Date date = sdf.parse(paymentTime);
         String transactionId = request.getParameter("vnp_TransactionNo");
         String totalPrice = request.getParameter("vnp_Amount");
 
-        System.out.println(orderInfo + "Nhanngu0009");
-        System.out.println(paymentTime + "Nhanngu0009");
-        System.out.println(transactionId + "Nhanngu0009");
-        System.out.println(totalPrice + "Nhanngu0009");
-        System.out.println(date + "Nhanngu0009");
-
         if (paymentStatus == 1 ){
             KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
             UserForm(model);
+
             List<HoaDon> listHoaDonByKhachHang = hoaDonService.findHoaDonByKhachHang(khachHang);
             List<HoaDon> listHoaDonChoThanhToan = hoaDonService.listHoaDonKhachHangAndTrangThaiOnline(khachHang, 0);
             model.addAttribute("pagePurchaseUser",true);
@@ -420,12 +418,10 @@ public class CheckOutController {
             model.addAttribute("type1","active");
             model.addAttribute("modalVNPaySuccess", true);
 
-            hoaDon.setTrangThai(1);
-
             LichSuThanhToan lichSuThanhToan =  new LichSuThanhToan();
             lichSuThanhToan.setTgThanhToan(date);
             lichSuThanhToan.setSoTienThanhToan(hoaDon.getTongTien());
-            lichSuThanhToan.setNoiDungThanhToan("Thanh toán thành công hóa đơn" + hoaDon.getMaHD() + " ||  Mã VNPAY : " + transactionId + " ||  Số tiền : " + totalPrice);
+            lichSuThanhToan.setNoiDungThanhToan("Đã thanh toán thành công hóa đơn " + hoaDon.getMaHD() + " ------   ||  Mã VNPAY : " + transactionId + " ||  Số tiền : " + totalPrice);
             lichSuThanhToan.setKhachHang(khachHang);
             lichSuThanhToan.setHoaDon(hoaDon);
             lichSuThanhToan.setMaLSTT("LSTT" + khachHang.getMaKH() + generateRandomNumbers());
@@ -436,6 +432,7 @@ public class CheckOutController {
             giaoHang.setTgThanhToan(date);
             giaoHangService.saveGiaoHang(giaoHang);
 
+            hoaDon.setTrangThai(1);
             hoaDonService.add(hoaDon);
             return "online/user";
         }else{
@@ -449,6 +446,9 @@ public class CheckOutController {
             model.addAttribute("listHoaDonChoThanhToan", listHoaDonChoThanhToan);
             model.addAttribute("type1","active");
             model.addAttribute("modalVNPayError", true);
+
+            hoaDon.setTrangThai(0);
+            hoaDonService.add(hoaDon);
             return "online/user";
         }
     }

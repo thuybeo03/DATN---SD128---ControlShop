@@ -104,18 +104,10 @@ public class HoaDonOnlineController {
 
         hoaDon.setNhanVien(nhanVien);
         hoaDon.setTrangThai(2);
-//        hoaDon.setTgShip(date);
 
         hoaDonService.add(hoaDon);
 
-        String maGH = "GH_" + hoaDon.getMaHD();
-
-        GiaoHang giaoHang = new GiaoHang();
-        giaoHang.setHoaDon(hoaDon);
-        giaoHang.setTrangThai(1);
-        giaoHang.setMaGiaoHang(maGH);
-        giaoHang.setThoiGian(new Date());
-        giaoHang.setPhiGiaoHang(0.0);
+        GiaoHang giaoHang = hoaDon.getGiaoHang();
         giaoHang.setNoiDung("Xác nhận nhân viên giao hàng");
         giaoHangService.saveGiaoHang(giaoHang);
 
