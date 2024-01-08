@@ -59,6 +59,9 @@ public class UserController {
     @Autowired
     private ViTriDonHangServices viTriDonHangServices;
 
+    @Autowired
+    private VNPayService vnPayService;
+
     @GetMapping("/setting")
     private String getSettingAccount(Model model){
 
@@ -632,6 +635,24 @@ public class UserController {
 
     }
 
+    @GetMapping("/purchase/bill/pay/{idHD}")
+    private String payBill(Model model, @PathVariable UUID idHD){
+
+        HoaDon hoaDon = hoaDonService.getOne(idHD);
+
+        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+
+        double doubleNumber = hoaDon.getTongTien();
+        int total = (int) doubleNumber;
+        String vnpayUrl = vnPayService.createOrder(total, "orderInfo", baseUrl);
+
+        hoaDon.setHinhThucThanhToan(1);
+        hoaDon.setTrangThai(0);
+        hoaDonService.add(hoaDon);
+
+        return "redirect:" + vnpayUrl;
+
+    }
     @GetMapping("/purchaser/bill/buy/again/{idHD}")
     private String buyAgain(Model model, @PathVariable UUID idHD){
         HoaDon hoaDonBuyAgain = hoaDonService.getOne(idHD);
@@ -776,9 +797,7 @@ public class UserController {
 
         hoaDon.setTongTien(hoaDon.getTongTien() - tienShipCu + tienShip);
         hoaDon.setTienShip(tienShip);
-//        hoaDon.setTgNhanDK(calendar.getTime());
         hoaDon.setSoLanThayDoiViTriShip(1);
-//        hoaDon.setTongTienDG(hoaDon.getTongTienDG() + tienShip - tienShipCu);
 
         hoaDonService.add(hoaDon);
 
@@ -816,12 +835,6 @@ public class UserController {
         return sb.toString();
     }
 
-    private String generateNewFileName(String originalFileName) {
-        long timestamp = System.currentTimeMillis();
-        String[] parts = originalFileName.split("\\.");
-        String extension = parts[parts.length - 1];
-        return "yeu_cau_hoan_hang_" + timestamp + "." + extension;
-    }
 
 }
 

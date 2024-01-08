@@ -24,7 +24,7 @@ public class BlogController {
     @Autowired
     private GHCTService ghctService;
 
-    @GetMapping("/vnpay-payment")
+    @GetMapping("/blog/detail")
     private String getBlogDetail(Model model){
 
         checkLogin(model);

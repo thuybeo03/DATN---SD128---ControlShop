@@ -7,14 +7,16 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
-@RequestMapping("/buyer")
 public class CheckOutController {
 
     @Autowired
@@ -50,7 +52,7 @@ public class CheckOutController {
     @Autowired
     private VNPayService vnPayService;
 
-    @PostMapping("/checkout")
+    @PostMapping("/buyer/checkout")
     private String checkOutCart(Model model, @RequestParam("selectedProducts") List<UUID> selectedProductIds){
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
@@ -161,7 +163,7 @@ public class CheckOutController {
         return "online/checkout";
     }
 
-    @PostMapping("/checkout/add/address")
+    @PostMapping("/buyer/checkout/add/address")
     public String addNewAddressPlaceOrder(Model model,@RequestParam(name = "defaultSelected", defaultValue = "false") boolean defaultSelected){
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
@@ -248,7 +250,7 @@ public class CheckOutController {
         return "online/checkout";
     }
 
-    @PostMapping("/checkout/change/address")
+    @PostMapping("/buyer/checkout/change/address")
     private String changeAddressCheckOut(Model model){
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
@@ -303,8 +305,7 @@ public class CheckOutController {
         return "online/checkout";
     }
 
-
-    @PostMapping("/checkout/placeoder")
+    @PostMapping("/buyer/checkout/placeoder")
     public String placeOrder(Model model){
 
         HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
@@ -352,27 +353,18 @@ public class CheckOutController {
             hoaDon.setTrangThai(0);
             hoaDonService.add(hoaDon);
 
+            LichSuThanhToan lichSuThanhToan =  new LichSuThanhToan();
+            lichSuThanhToan.setTgThanhToan(new Date());
+            lichSuThanhToan.setSoTienThanhToan(hoaDon.getTongTien());
+            lichSuThanhToan.setNoiDungThanhToan("Đặt hàng " + hoaDon.getMaHD() + " hình thức thanh toán VNPAY");
+            lichSuThanhToan.setKhachHang(khachHang);
+            lichSuThanhToan.setHoaDon(hoaDon);
+            lichSuThanhToan.setMaLSTT("LSTT" + khachHang.getMaKH() + generateRandomNumbers());
+            lichSuThanhToan.setTrangThai(0);
+            lsThanhToanService.addLSTT(lichSuThanhToan);
+
             return "redirect:" + vnpayUrl;
 
-//            return "online/checkout";
-
-//            UserForm(model);
-//
-//            model.addAttribute("maHD", hoaDon.getMaHD());
-//            model.addAttribute("thongTinThanhToan", true);
-//
-//            model.addAttribute("addNewAddressNull", true);
-//            model.addAttribute("addNewAddressNulll", false);
-//
-//            LichSuThanhToan lichSuThanhToan =  new LichSuThanhToan();
-//            lichSuThanhToan.setTgThanhToan(new Date());
-//            lichSuThanhToan.setSoTienThanhToan(hoaDon.getTongTien());
-//            lichSuThanhToan.setNoiDungThanhToan("Đặt hàng " + hoaDon.getMaHD() + " hình thức thanh toán QRCode Baking");
-//            lichSuThanhToan.setKhachHang(khachHang);
-//            lichSuThanhToan.setHoaDon(hoaDon);
-//            lichSuThanhToan.setMaLSTT("LSTT" + khachHang.getMaKH() + generateRandomNumbers());
-//            lichSuThanhToan.setTrangThai(0);
-//            lsThanhToanService.addLSTT(lichSuThanhToan);
 
         }else{
             hoaDon.setHinhThucThanhToan(0);
@@ -395,6 +387,70 @@ public class CheckOutController {
         }
 
 
+    }
+
+    @GetMapping("/vnpay-payment")
+    public String GetMapping( Model model) throws ParseException {
+        int paymentStatus = vnPayService.orderReturn(request);
+        HoaDon hoaDon = (HoaDon) session.getAttribute("hoaDonTaoMoi");
+
+        String orderInfo = request.getParameter("vnp_OrderInfo");
+        String paymentTime = request.getParameter("vnp_PayDate");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date date = sdf.parse(paymentTime);
+        String transactionId = request.getParameter("vnp_TransactionNo");
+        String totalPrice = request.getParameter("vnp_Amount");
+
+        System.out.println(orderInfo + "Nhanngu0009");
+        System.out.println(paymentTime + "Nhanngu0009");
+        System.out.println(transactionId + "Nhanngu0009");
+        System.out.println(totalPrice + "Nhanngu0009");
+        System.out.println(date + "Nhanngu0009");
+
+        if (paymentStatus == 1 ){
+            KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+            UserForm(model);
+            List<HoaDon> listHoaDonByKhachHang = hoaDonService.findHoaDonByKhachHang(khachHang);
+            List<HoaDon> listHoaDonChoThanhToan = hoaDonService.listHoaDonKhachHangAndTrangThaiOnline(khachHang, 0);
+            model.addAttribute("pagePurchaseUser",true);
+            model.addAttribute("purchaseAll",true);
+            model.addAttribute("listAllHDByKhachHang", listHoaDonByKhachHang);
+            model.addAttribute("listHoaDonChoThanhToan", listHoaDonChoThanhToan);
+
+            model.addAttribute("type1","active");
+            model.addAttribute("modalVNPaySuccess", true);
+
+            hoaDon.setTrangThai(1);
+
+            LichSuThanhToan lichSuThanhToan =  new LichSuThanhToan();
+            lichSuThanhToan.setTgThanhToan(date);
+            lichSuThanhToan.setSoTienThanhToan(hoaDon.getTongTien());
+            lichSuThanhToan.setNoiDungThanhToan("Thanh toán thành công hóa đơn" + hoaDon.getMaHD() + " ||  Mã VNPAY : " + transactionId + " ||  Số tiền : " + totalPrice);
+            lichSuThanhToan.setKhachHang(khachHang);
+            lichSuThanhToan.setHoaDon(hoaDon);
+            lichSuThanhToan.setMaLSTT("LSTT" + khachHang.getMaKH() + generateRandomNumbers());
+            lichSuThanhToan.setTrangThai(0);
+            lsThanhToanService.addLSTT(lichSuThanhToan);
+
+            GiaoHang giaoHang = hoaDon.getGiaoHang();
+            giaoHang.setTgThanhToan(date);
+            giaoHangService.saveGiaoHang(giaoHang);
+
+            hoaDonService.add(hoaDon);
+            return "online/user";
+        }else{
+            KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+            UserForm(model);
+            List<HoaDon> listHoaDonByKhachHang = hoaDonService.findHoaDonByKhachHang(khachHang);
+            List<HoaDon> listHoaDonChoThanhToan = hoaDonService.listHoaDonKhachHangAndTrangThaiOnline(khachHang, 0);
+            model.addAttribute("pagePurchaseUser",true);
+            model.addAttribute("purchaseAll",true);
+            model.addAttribute("listAllHDByKhachHang", listHoaDonByKhachHang);
+            model.addAttribute("listHoaDonChoThanhToan", listHoaDonChoThanhToan);
+            model.addAttribute("type1","active");
+            model.addAttribute("modalVNPayError", true);
+            return "online/user";
+        }
     }
 
     private void UserForm(Model model){
