@@ -59,52 +59,6 @@ public class ShippingFeeServiceImpl implements ShippingFeeService {
         return shippingFee;
     }
 
-//    @Override
-//    public Double calculatorVoucherBill(HoaDon hoaDon, KhuyenMai khuyenMai) {
-//
-//        Double billFee = 0.0;
-//
-//        Double sumPrice = hoaDon.getTongTien();
-//        boolean loaiGiam = khuyenMai.isLoaiGiam();
-//
-//        if (loaiGiam){
-//            billFee = khuyenMai.getGiaTienGiam();
-//        }else{
-//            Double soTienGiam = sumPrice*khuyenMai.getPhanTramGiam();
-//            if (soTienGiam > khuyenMai.getGiaTienGiamToiDaPT()){
-//                billFee=khuyenMai.getGiaTienGiamToiDaPT();
-//            }else {
-//                billFee = soTienGiam;
-//            }
-//        }
-//        return billFee;
-//    }
-//
-//    @Override
-//    public Double calculatorVoucherShipping(HoaDon hoaDon, KhuyenMai khuyenMai, Double tienShip) {
-//
-//        Double voucherShipping = 0.0;
-//        boolean loaiGiam = khuyenMai.isLoaiGiam();
-//
-//        if(loaiGiam){
-//            voucherShipping = khuyenMai.getGiaTienGiam();
-//            if (tienShip <= voucherShipping){
-//                voucherShipping = tienShip ;
-//            }
-//        }else{
-//            Double soTienGiamShip = khuyenMai.getPhanTramGiam()*tienShip;
-//
-//            if (soTienGiamShip < khuyenMai.getGiaTienGiamToiDaPT()){
-//                voucherShipping = khuyenMai.getPhanTramGiam()*tienShip;
-//            }else{
-//                voucherShipping = khuyenMai.getGiaTienGiamToiDaPT();
-//            }
-//
-//        }
-//
-//        return voucherShipping;
-//    }
-
     @Override
     public Integer tinhNgayNhanDuKien(HoaDon hoaDon) {
 
@@ -116,7 +70,6 @@ public class ShippingFeeServiceImpl implements ShippingFeeService {
 
         int soNgaySauDo = 0;
         Province province = thanhPhoService.findByNameProvince(thanhPho);
-
         if(province == null){
             List<Province> provinceList =  thanhPhoService.getAll();
             for (Province xxxx: provinceList) {

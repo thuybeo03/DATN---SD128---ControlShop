@@ -159,19 +159,18 @@ public class UserController {
     private String getPurchaseAccount(Model model){
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-
-        UserForm(model, khachHang);
-
+        GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
+        List<GioHangChiTiet> listGHCTActive = ghctService.findByGHActive(gioHang);
         List<HoaDon> listHoaDonByKhachHang = hoaDonService.findHoaDonByKhachHang(khachHang);
-
         List<HoaDon> listHoaDonChoThanhToan = hoaDonService.listHoaDonKhachHangAndTrangThaiOnline(khachHang, 0);
+        Integer sumProductInCart = listGHCTActive.size();
 
-
+        model.addAttribute("fullNameLogin", khachHang.getHoTenKH());
+        model.addAttribute("sumProductInCart", sumProductInCart);
         model.addAttribute("pagePurchaseUser",true);
         model.addAttribute("purchaseAll",true);
         model.addAttribute("listAllHDByKhachHang", listHoaDonByKhachHang);
         model.addAttribute("listHoaDonChoThanhToan", listHoaDonChoThanhToan);
-
         model.addAttribute("type1","active");
 
         return "online/user";
@@ -501,7 +500,6 @@ public class UserController {
             hoaDon.setTrangThai(0);
             hoaDonService.add(hoaDon);
 
-
             LichSuThanhToan lichSuThanhToan =  new LichSuThanhToan();
             lichSuThanhToan.setTgThanhToan(new Date());
             lichSuThanhToan.setSoTienThanhToan(hoaDon.getTongTien());
@@ -511,11 +509,23 @@ public class UserController {
             lichSuThanhToan.setMaLSTT("LSTT" + khachHang.getMaKH() + generateRandomNumbers());
             lichSuThanhToan.setTrangThai(0);
             lichSuThanhToan.setLoaiTT(0);
-            lichSuThanhToan.setNoiDungThanhToan("Thay đổi hình thức thanh toán");
+            lichSuThanhToan.setNoiDungThanhToan("Thay đổi hình thức thanh toán sang VNPAY");
             lsThanhToanService.addLSTT(lichSuThanhToan);
 
-            model.addAttribute("showThongBaoThayDoiHTTT", true);
-            return "redirect:/buyer/purchase/pay";
+            String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+            double doubleNumber = hoaDon.getTongTien();
+            int total = (int) doubleNumber;
+
+            String vnpayUrl = vnPayService.createOrder(total, "orderInfo", baseUrl);
+            hoaDon.setHinhThucThanhToan(1);
+            hoaDon.setTrangThai(0);
+            hoaDonService.add(hoaDon);
+
+            session.removeAttribute("HoaDonThanhToanNhanNgu");
+            session.setAttribute("HoaDonThanhToanNhanNgu", hoaDon);
+
+            return "redirect:" + vnpayUrl;
+
         }else{
             UserForm(model, khachHang);
 

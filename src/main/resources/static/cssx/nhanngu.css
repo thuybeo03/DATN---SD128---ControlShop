@@ -31,6 +31,40 @@
     animation: dash-check 0.95s 0.35s ease-in-out forwards;
 }
 
+.modal#statusSuccessPlaceOrder .modal-content,
+.modal#statusSuccessPlaceOrder .modal-content {
+    border-radius: 30px;
+}
+.modal#statusSuccessPlaceOrder .modal-content svg,
+.modal#statusSuccessPlaceOrder .modal-content svg {
+    width: 100px;
+    display: block;
+    margin: 0 auto;
+}
+.modal#statusSuccessPlaceOrder .modal-content .path,
+.modal#statusSuccessPlaceOrder .modal-content .path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+}
+.modal#statusSuccessPlaceOrder .modal-content .path.circle,
+.modal#statusSuccessPlaceOrder .modal-content .path.circle {
+    -webkit-animation: dash 0.9s ease-in-out;
+    animation: dash 0.9s ease-in-out;
+}
+.modal#statusSuccessPlaceOrder .modal-content .path.line,
+.modal#statusSuccessPlaceOrder .modal-content .path.line {
+    stroke-dashoffset: 1000;
+    -webkit-animation: dash 0.95s 0.35s ease-in-out forwards;
+    animation: dash 0.95s 0.35s ease-in-out forwards;
+}
+.modal#statusSuccessPlaceOrder .modal-content .path.check,
+.modal#statusSuccessPlaceOrder .modal-content .path.check {
+    stroke-dashoffset: -100;
+    -webkit-animation: dash-check 0.95s 0.35s ease-in-out forwards;
+    animation: dash-check 0.95s 0.35s ease-in-out forwards;
+}
+
+
 @-webkit-keyframes dash {
     0% {
         stroke-dashoffset: 1000;

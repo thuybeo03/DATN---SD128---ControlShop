@@ -61,12 +61,12 @@
             <div class="col-sm-6">
               <div class="text-muted">
                 <h5 class="font-size-16 mb-3">Gửi đến :</h5>
-                <h5 class="font-size-15 mb-2" th:text="${billPrint.tenNguoiNhan}"></h5>
-                <p class="mb-1" th:text="${billPrint.diaChiNguoiNhan}"></p>
+                <h5 class="font-size-15 mb-2" th:text="${billPrint.giaoHang.tenNguoiNhan}"></h5>
+                <p class="mb-1" th:text="${billPrint.giaoHang.diaChiNguoiNhan}"></p>
                 <p class="mb-1"><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
                                    data-cfemail="3f6f4d5a4c4b5051725653535a4d7f5e4d52464c4f46115c5052">no email</a>
                 </p>
-                <p th:text="'Số điện thoại : ' + ${billPrint.sdtNguoiNhan}"></p>
+                <p th:text="'Số điện thoại : ' + ${billPrint.giaoHang.sdtNguoiNhan}"></p>
               </div>
             </div>
 
@@ -117,7 +117,7 @@
                 <tr>
                   <th scope="row" colspan="4" class="border-0 text-end">Tổng tiền cần thu</th>
                   <td class="border-0 text-end">
-                    <h4 th:if="${billPrint.hinhThucThanhToan == 0}" class="m-0 fw-semibold" th:text="'₫'+${#numbers.formatDecimal(billPrint.tongTienDG, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h4>
+                    <h4 th:if="${billPrint.hinhThucThanhToan == 0}" class="m-0 fw-semibold" th:text="'₫'+${#numbers.formatDecimal(billPrint.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></h4>
                     <h4 th:if="${billPrint.hinhThucThanhToan == 1}" class="m-0 fw-semibold">₫ 0</h4>
                   </td>
                 </tr>

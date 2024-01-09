@@ -109,6 +109,7 @@ public class HoaDonOnlineController {
 
         GiaoHang giaoHang = hoaDon.getGiaoHang();
         giaoHang.setNoiDung("Xác nhận nhân viên giao hàng");
+        giaoHang.setTgShip(date);
         giaoHangService.saveGiaoHang(giaoHang);
 
         hoaDon.setGiaoHang(giaoHang);

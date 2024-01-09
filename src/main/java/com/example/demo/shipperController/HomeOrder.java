@@ -202,12 +202,12 @@ public class HomeOrder {
                 hoaDon.setTrangThai(4);
                 giaoHang.setTgHuy(new Date());
                 giaoHang.setLyDoHuy(moTa);
+                giaoHang.setTrangThai(2);
                 hoaDonService.add(hoaDon);
 
                 Date date = new Date();
 
                 ViTriDonHang viTriDonHang2 = new ViTriDonHang();
-
                 viTriDonHang.setViTri("Đơn hàng đã bị hủy");
                 viTriDonHang.setThoiGian(new Date());
                 viTriDonHang.setTrangThai(2);
@@ -258,18 +258,13 @@ public class HomeOrder {
 
     @GetMapping("/bill/print/{idHD}")
     private String printBill(Model model, @PathVariable UUID idHD){
-
         HoaDon hoaDon = hoaDonService.getOne(idHD);
-
         model.addAttribute("billPrint", hoaDon);
-
         return "transportation/printBill";
     }
 
     @GetMapping("/delivery/refund/update/{idHD}")
     private String viewUpdateRefundGiaoHang(Model model, @PathVariable UUID idHD){
-
-
         showData(model);
         HoaDon hoaDon = hoaDonService.getOne(idHD);
         showDataGHHH(model, hoaDon);
@@ -305,41 +300,28 @@ public class HomeOrder {
 
         HoaDon hoaDon = hoaDonService.getOne(idHD);
         GiaoHang giaoHang = hoaDon.getGiaoHang();
-        String trangThaiHoan = request.getParameter("trangThaiGiaoHang");
+        String trangThaiHoan = request.getParameter("trangThaiHoanHang");
 
         if (trangThaiHoan.equals("batDauHoan")){
-            if(giaoHang.getMaVanDonHoan() == null){
-                giaoHang.setThoiGianHoan(new Date());
-                giaoHangService.saveGiaoHang(giaoHang);
+            String maVanDonHoan = request.getParameter("maVanDonGH");
+            Double phiHoanHang = Double.parseDouble(request.getParameter("phiGiaoHangGH"));
+            giaoHang.setPhiHoanHang(phiHoanHang);
+            giaoHang.setMaVanDonHoan(maVanDonHoan);
+            giaoHang.setThoiGianHoan(new Date());
+            giaoHangService.saveGiaoHang(giaoHang);
 
-                ViTriDonHang viTriDonHang = new ViTriDonHang();
-                viTriDonHang.setViTri("Bắt đầu hoàn hàng về kho");
-                viTriDonHang.setGiaoHang(giaoHang);
-                viTriDonHang.setTrangThai(3);
-                viTriDonHang.setThoiGian(new Date());
-                viTriDonHangServices.addViTriDonHang(viTriDonHang);
-            }else{
-                String maVanDonHoan = request.getParameter("maVanDonGH");
-                Double phiHoanHang = Double.parseDouble(request.getParameter("phiGiaoHangGH"));
+            ViTriDonHang viTriDonHang = new ViTriDonHang();
+            viTriDonHang.setViTri("Bắt đầu hoàn hàng về kho");
+            viTriDonHang.setGiaoHang(giaoHang);
+            viTriDonHang.setTrangThai(3);
+            viTriDonHang.setThoiGian(new Date());
+            viTriDonHangServices.addViTriDonHang(viTriDonHang);
 
-                giaoHang.setPhiHoanHang(phiHoanHang);
-                giaoHang.setMaVanDonHoan(maVanDonHoan);
-                giaoHang.setThoiGianHoan(new Date());
-                giaoHangService.saveGiaoHang(giaoHang);
-
-                ViTriDonHang viTriDonHang = new ViTriDonHang();
-                viTriDonHang.setViTri("Bắt đầu hoàn hàng về kho");
-                viTriDonHang.setGiaoHang(giaoHang);
-                viTriDonHang.setTrangThai(3);
-                viTriDonHang.setThoiGian(new Date());
-                viTriDonHangServices.addViTriDonHang(viTriDonHang);
-            }
         }else if(trangThaiHoan.equals("dangGiao")){
             String thanhPho = request.getParameter("city");
             String district = request.getParameter("district");
             String ward = request.getParameter("ward");
             String moTa = request.getParameter("moTa");
-
             String viTri = "Đơn hàng đã đến"  + ", " + ward + ", " + district + " , " + thanhPho + " || " + moTa;
 
             ViTriDonHang viTriDonHang = new ViTriDonHang();
@@ -350,13 +332,11 @@ public class HomeOrder {
             viTriDonHang.setNoiDung(moTa);
             viTriDonHangServices.addViTriDonHang(viTriDonHang);
 
-
-        }else{
+        }else if(trangThaiHoan.equals("thanhCong")){
             String thanhPho = request.getParameter("city");
             String district = request.getParameter("district");
             String ward = request.getParameter("ward");
             String moTa = request.getParameter("moTa");
-
             String viTri = "Đơn hàng đã về kho "  + ", " + ward + ", " + district + " , " + thanhPho + " || " + moTa;
 
             ViTriDonHang viTriDonHang = new ViTriDonHang();
@@ -366,7 +346,7 @@ public class HomeOrder {
             viTriDonHang.setTrangThai(5);
             viTriDonHang.setNoiDung(moTa);
             viTriDonHangServices.addViTriDonHang(viTriDonHang);
-            giaoHang.setTrangThai(2);
+            giaoHang.setTrangThai(4);
             giaoHangService.saveGiaoHang(giaoHang);
 
             for (HoaDonChiTiet xx: hoaDon.getHoaDonChiTiets()) {
@@ -385,25 +365,17 @@ public class HomeOrder {
 
     @GetMapping("/bill/refund/print/{idHD}")
     private String printBillRefund(Model model, @PathVariable UUID idHD){
-
         HoaDon hoaDon = hoaDonService.getOne(idHD);
-
         model.addAttribute("billPrint", hoaDon);
-
         return "transportation/printBillRefund";
     }
 
     private void showData(Model model){
         NhanVien nhanVien = (NhanVien) session.getAttribute("shipperLogged");
-
         List<HoaDon> allHoaDonList = hoaDonService.listAllHoaDonByNhanVien(nhanVien);
         List<HoaDon> hoaDonDGList = hoaDonService.listHoaDonByNhanVienAndTrangThai(nhanVien, 2);
         List<HoaDon> hoaDonDoneList = hoaDonService.listHoaDonHuyAndThanhCongByNhanVien(nhanVien);
-
         List<HoaDon> hoaDonListHoan= new ArrayList<>();
-
-
-
 
         model.addAttribute("allHoaDonList",allHoaDonList);
         model.addAttribute("sumDH", allHoaDonList.size() + hoaDonListHoan.size());
@@ -413,12 +385,10 @@ public class HomeOrder {
         model.addAttribute("hoaDonHoan", hoaDonListHoan.size());
         model.addAttribute("hoaDonDGList",hoaDonDGList);
         model.addAttribute("hoaDonDoneList",hoaDonDoneList);
-
         model.addAttribute("nameNhanVien",nhanVien.getHoTenNV());
     }
 
     private void showDataGH(Model model, HoaDon hoaDon){
-
         GiaoHang giaoHangListActive = hoaDon.getGiaoHang();
         model.addAttribute("showHTGH", "true");
         model.addAttribute("HoaDonVanChuyen", hoaDon);
@@ -426,7 +396,6 @@ public class HomeOrder {
     }
 
     private void showDataGHHH(Model model, HoaDon hoaDon){
-
         GiaoHang giaoHangListActive = hoaDon.getGiaoHang();
         model.addAttribute("showDonHangHoan", "true");
         model.addAttribute("HoaDonVanChuyen", hoaDon);
@@ -435,33 +404,27 @@ public class HomeOrder {
     }
 
     private void showDataTab1(Model model){
-
         model.addAttribute("activeAll", "nav-link active");
         model.addAttribute("activeVanChuyen", "nav-link");
         model.addAttribute("activeDone", "nav-link");
-
         model.addAttribute("tabpane1", "tab-pane show active");
         model.addAttribute("tabpane2", "tab-pane");
         model.addAttribute("tabpane3", "tab-pane");
     }
 
     private void showDataTab2(Model model){
-
         model.addAttribute("activeAll", "nav-link");
         model.addAttribute("activeVanChuyen", "nav-link active");
         model.addAttribute("activeDone", "nav-link");
-
         model.addAttribute("tabpane1", "tab-pane");
         model.addAttribute("tabpane2", "tab-pane show active");
         model.addAttribute("tabpane3", "tab-pane");
     }
 
     private void showDataTab3(Model model){
-
         model.addAttribute("activeAll", "nav-link");
         model.addAttribute("activeVanChuyen", "nav-link");
         model.addAttribute("activeDone", "nav-link active");
-
         model.addAttribute("tabpane1", "tab-pane");
         model.addAttribute("tabpane2", "tab-pane");
         model.addAttribute("tabpane3", "tab-pane show active");

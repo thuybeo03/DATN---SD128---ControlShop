@@ -115,16 +115,6 @@ public class CheckOutController {
         double total = listHDCTCheckOut.stream()
                 .mapToDouble(HoaDonChiTiet::getDonGia)
                 .sum();
-
-        if(diaChiKHDefault == null){
-            model.addAttribute("addNewAddressNulll", true);
-            model.addAttribute("addNewAddressNull", true);
-        }else{
-            model.addAttribute("diaChiKHDefault", diaChiKHDefault);
-            model.addAttribute("addNewAddressNotNull", true);
-            model.addAttribute("listAddressKH", diaChiKHList);
-        }
-
         hoaDon.setTongSP(sumQuantity);
         hoaDon.setTongTienSanPham(total);
 
@@ -150,9 +140,13 @@ public class CheckOutController {
             model.addAttribute("billPlaceOrder", hoaDon);
             model.addAttribute("toTalOder", total  + shippingFee );
             model.addAttribute("tongTienDaGiamVoucherShip", total + shippingFee);
-
+            model.addAttribute("diaChiKHDefault", diaChiKHDefault);
+            model.addAttribute("addNewAddressNotNull", true);
+            model.addAttribute("listAddressKH", diaChiKHList);
         }else{
             model.addAttribute("tongTienDaGiamVoucherShip", total);
+            model.addAttribute("addNewAddressNulll", true);
+            model.addAttribute("addNewAddressNull", true);
         }
 
         session.removeAttribute("hoaDonTaoMoi");
@@ -219,17 +213,14 @@ public class CheckOutController {
                 .sum();
 
         Double shippingFee = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
-
         hoaDon.setTongTien(total + shippingFee);
         hoaDonService.add(hoaDon);
 
         GiaoHang giaoHang = hoaDon.getGiaoHang();
-
         giaoHang.setDiaChiNguoiNhan(diaChiKH.getDiaChiChiTiet());
         giaoHang.setSdtNguoiNhan(diaChiKH.getSdtNguoiNhan());
         giaoHang.setTenNguoiNhan(diaChiKH.getTenNguoiNhan());
         giaoHangService.saveGiaoHang(giaoHang);
-
 
         model.addAttribute("sumQuantity", sumQuantity);
         model.addAttribute("total", total);
@@ -237,16 +228,13 @@ public class CheckOutController {
         model.addAttribute("listProductCheckOut", hoaDonChiTietList);
         model.addAttribute("listAddressKH", diaChiKHList);
         model.addAttribute("addNewAddressNotNull", true);
-
+        model.addAttribute("billPlaceOrder", hoaDon);
         model.addAttribute("shippingFee", shippingFee);
-
-        model.addAttribute("tongTienDaGiamVoucherShip", total + shippingFee );
         model.addAttribute("toTalOder", total  + shippingFee );
 
         session.removeAttribute("diaChiGiaoHang");
         session.setAttribute("diaChiGiaoHang", diaChiKH);
         showData(model);
-
         return "online/checkout";
     }
 
@@ -283,8 +271,6 @@ public class CheckOutController {
         hoaDon.setTongTien(total + shippingFee);
         hoaDonService.add(hoaDon);
 
-
-//      TODO PASSING DATA BEGIN
         model.addAttribute("sumQuantity", sumQuantity);
         model.addAttribute("total", total);
         model.addAttribute("diaChiKHDefault", diaChiKHChange);
@@ -292,13 +278,13 @@ public class CheckOutController {
         model.addAttribute("listAddressKH", diaChiKHList);
         model.addAttribute("addNewAddressNotNull", true);
         model.addAttribute("shippingFee", shippingFee);
-
-        model.addAttribute("tongTienDaGiamVoucherShip", total + shippingFee );
+        model.addAttribute("billPlaceOrder", hoaDon);
         model.addAttribute("toTalOder", total  + shippingFee );
-//      TODO PASSING DATA END
 
         session.removeAttribute("diaChiGiaoHang");
         session.setAttribute("diaChiGiaoHang", diaChiKHChange);
+
+
 
         showData(model);
 
@@ -316,16 +302,18 @@ public class CheckOutController {
 
         Double shippingFee = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
 
-        hoaDon.setTienShip(shippingFee);
-
         Date ngayBatDau =  hoaDon.getTgTao();
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(ngayBatDau);
-
         calendar.add(Calendar.DATE, shippingFeeService.tinhNgayNhanDuKien(hoaDon));
 
         Date ngayKetThuc = calendar.getTime();
+
+        GiaoHang giaoHang = hoaDon.getGiaoHang();;
+        giaoHang.setTgNhanDK(ngayKetThuc);
+        giaoHang.setNoiDung(loiNhan);
+        giaoHangService.saveGiaoHang(giaoHang);
 
         hoaDon.setTienShip(shippingFee);
 
@@ -365,7 +353,6 @@ public class CheckOutController {
 
             return "redirect:" + vnpayUrl;
 
-
         }else{
             hoaDon.setHinhThucThanhToan(0);
             hoaDon.setTrangThai(1);
@@ -381,9 +368,23 @@ public class CheckOutController {
             lichSuThanhToan.setTrangThai(0);
             lsThanhToanService.addLSTT(lichSuThanhToan);
 
-            UserForm(model);
+            GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
+            List<GioHangChiTiet> listGHCTActive = ghctService.findByGHActive(gioHang);
+            List<HoaDon> listHoaDonByKhachHang = hoaDonService.findHoaDonByKhachHang(khachHang);
+            List<HoaDon> listHoaDonChoThanhToan = hoaDonService.listHoaDonKhachHangAndTrangThaiOnline(khachHang, 0);
+            Integer sumProductInCart = listGHCTActive.size();
 
-            return "redirect:/buyer/purchase";
+            model.addAttribute("fullNameLogin", khachHang.getHoTenKH());
+            model.addAttribute("sumProductInCart", sumProductInCart);
+            model.addAttribute("pagePurchaseUser",true);
+            model.addAttribute("purchaseAll",true);
+            model.addAttribute("listAllHDByKhachHang", listHoaDonByKhachHang);
+            model.addAttribute("listHoaDonChoThanhToan", listHoaDonChoThanhToan);
+            model.addAttribute("type1","active");
+
+            model.addAttribute("modalDeliverySuccess", true);
+
+            return "online/user";
         }
 
 
@@ -404,19 +405,9 @@ public class CheckOutController {
         String transactionId = request.getParameter("vnp_TransactionNo");
         String totalPrice = request.getParameter("vnp_Amount");
 
+        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+
         if (paymentStatus == 1 ){
-            KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-            UserForm(model);
-
-            List<HoaDon> listHoaDonByKhachHang = hoaDonService.findHoaDonByKhachHang(khachHang);
-            List<HoaDon> listHoaDonChoThanhToan = hoaDonService.listHoaDonKhachHangAndTrangThaiOnline(khachHang, 0);
-            model.addAttribute("pagePurchaseUser",true);
-            model.addAttribute("purchaseAll",true);
-            model.addAttribute("listAllHDByKhachHang", listHoaDonByKhachHang);
-            model.addAttribute("listHoaDonChoThanhToan", listHoaDonChoThanhToan);
-
-            model.addAttribute("type1","active");
-            model.addAttribute("modalVNPaySuccess", true);
 
             LichSuThanhToan lichSuThanhToan =  new LichSuThanhToan();
             lichSuThanhToan.setTgThanhToan(date);
@@ -434,21 +425,42 @@ public class CheckOutController {
 
             hoaDon.setTrangThai(1);
             hoaDonService.add(hoaDon);
-            return "online/user";
-        }else{
-            KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
-            UserForm(model);
+
+            GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
+            List<GioHangChiTiet> listGHCTActive = ghctService.findByGHActive(gioHang);
             List<HoaDon> listHoaDonByKhachHang = hoaDonService.findHoaDonByKhachHang(khachHang);
             List<HoaDon> listHoaDonChoThanhToan = hoaDonService.listHoaDonKhachHangAndTrangThaiOnline(khachHang, 0);
+            Integer sumProductInCart = listGHCTActive.size();
+
+            model.addAttribute("fullNameLogin", khachHang.getHoTenKH());
+            model.addAttribute("sumProductInCart", sumProductInCart);
             model.addAttribute("pagePurchaseUser",true);
             model.addAttribute("purchaseAll",true);
+            model.addAttribute("modalVNPaySuccess",true);
             model.addAttribute("listAllHDByKhachHang", listHoaDonByKhachHang);
             model.addAttribute("listHoaDonChoThanhToan", listHoaDonChoThanhToan);
             model.addAttribute("type1","active");
-            model.addAttribute("modalVNPayError", true);
 
+            return "online/user";
+        }else{
             hoaDon.setTrangThai(0);
             hoaDonService.add(hoaDon);
+
+            GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
+            List<GioHangChiTiet> listGHCTActive = ghctService.findByGHActive(gioHang);
+            List<HoaDon> listHoaDonByKhachHang = hoaDonService.findHoaDonByKhachHang(khachHang);
+            List<HoaDon> listHoaDonChoThanhToan = hoaDonService.listHoaDonKhachHangAndTrangThaiOnline(khachHang, 0);
+            Integer sumProductInCart = listGHCTActive.size();
+
+            model.addAttribute("fullNameLogin", khachHang.getHoTenKH());
+            model.addAttribute("sumProductInCart", sumProductInCart);
+            model.addAttribute("pagePurchaseUser",true);
+            model.addAttribute("purchaseAll",true);
+            model.addAttribute("modalVNPayError",true);
+            model.addAttribute("listAllHDByKhachHang", listHoaDonByKhachHang);
+            model.addAttribute("listHoaDonChoThanhToan", listHoaDonChoThanhToan);
+            model.addAttribute("type1","active");
+
             return "online/user";
         }
     }
@@ -464,6 +476,17 @@ public class CheckOutController {
         model.addAttribute("sumProductInCart", sumProductInCart);
         session.removeAttribute("hoaDonTaoMoi");
         session.removeAttribute("diaChiGiaoHang");
+
+        List<HoaDon> listHoaDonByKhachHang = hoaDonService.findHoaDonByKhachHang(khachHang);
+
+        List<HoaDon> listHoaDonChoThanhToan = hoaDonService.listHoaDonKhachHangAndTrangThaiOnline(khachHang, 0);
+
+        model.addAttribute("pagePurchaseUser",true);
+        model.addAttribute("purchaseAll",true);
+        model.addAttribute("listAllHDByKhachHang", listHoaDonByKhachHang);
+        model.addAttribute("listHoaDonChoThanhToan", listHoaDonChoThanhToan);
+
+        model.addAttribute("type1","active");
     }
 
     public String generateRandomNumbers() {
