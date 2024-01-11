@@ -266,12 +266,7 @@
         <div class="row">
 
             <div class="col-lg-3">
-                <div class="shop__sidebar__search">
-                    <form action="#">
-                        <input type="text" placeholder="Search...">
-                        <button type="submit"><span class="icon_search"></span></button>
-                    </form>
-                </div>
+
                 <div class="shop__sidebar__accordion">
                     <div class="accordion" id="accordionExample">
                         <div class="card">
@@ -282,7 +277,6 @@
                                 <div class="card-body">
                                     <div class="shop__sidebar__categories">
                                         <ul class="nice-scroll" style="height: 20%">
-                                            <li><a href="/buyer/setting">Thông tin</a></li>
                                             <li><a href="/buyer/addresses">Địa chỉ</a></li>
                                         </ul>
                                     </div>
@@ -1115,90 +1109,6 @@
                     </div>
                 </div>
 <!--                Detail Bill Completed End-->
-
-<!--                Setting Account Begin-->
-                <div th:if="${pagesettingAccount}" class="card">
-                    <div class="card-body" >
-
-                        <div class="row" style="background-color: #f3f2ee; height: 100px; width: 803px; margin-left: 2px;  border-radius: 5px;">
-                            <img src="/images/imgRanks/Gold.png" alt="" style="margin-left: 700px; width: 50px; height: 50xp;">
-                            <img src="/images/imgsKhachHang/Avatar/CEO.jpg" alt="" style="height: 110px; width: 110px; border-radius: 50% ; margin-left: 10px; margin-top: 0px;">
-
-                            <h4 style="margin-top: 60px; margin-left: 70px;">Pham Huu Nhan</h4>
-                            <p style=" margin-left: 230px; margin-top: 20px;">Thanh vien tu 19/09/2003</p>
-
-                        </div>
-
-                        <div class="row" style="  width: 803px; margin-left: 2px; border-radius: 5px; margin-top: 40px;">
-
-                            <div class="form-group" style="margin-left: 50px; margin-top: 50px; width: 300px;">
-                                <label>Họ tên</label>
-                                <br>
-                                <input class="form-control" type="text" placeholder="Nhan Pham">
-                            </div>
-                            <div class="form-group" style="margin-left: 50px; margin-top: 50px; width: 300px;">
-                                <label>Giới tính</label>
-                                <br>
-                                <input type="text" class="form-control" placeholder="Male">
-                            </div>
-                            <br>
-                            <div class="form-group" style="margin-left: 50px; margin-top: 10px;  width: 300px;">
-                                <label>Ngày sinh :</label>
-                                <br>
-                                <input type="date" class="form-control">
-                            </div>
-                            <div class="form-group" style="margin-left: 50px; margin-top: 10px; width: 300px;">
-                                <label>ID CCCD :</label>
-                                <br>
-                                <input type="text" placeholder="038203023900" class="form-control">
-                            </div>
-                            <br>
-                            <div class="form-group" style="margin-left: 50px; margin-top: 10px;  width: 300px;">
-                                <label>Email :</label>
-                                <br>
-                                <input placeholder="nhan@gmail.com" type="text" class="form-control">
-                            </div>
-                            <div class="form-group" style="margin-left: 50px; margin-top: 10px;  width: 300px;">
-                                <label>SDT :</label>
-                                <br>
-                                <input type="text" class="form-control" placeholder="+8438 432 9003">
-                            </div>
-                            <br>
-
-                        </div>
-                        <div class="row" style="  width: 803px; margin-left: 2px; border-radius: 5px; margin-top: 20px;">
-                            <button class="btn btn-success" style="height: 50px; width: 100px;">Submit</button>
-                            <p style="margin-left: 300px;margin-top: 12px;">Chọn CCCD:</p>
-                            <input type ="file" class="btn btn-success" style="height: 50px; width: 250px; margin-left: 20px;">
-                        </div>
-                        <div class="row" style="height: 1px; width: 100%; background-color: black; margin: 30px 0 10px 7px;"></div>
-
-                        <h5 style="margin-top: 20px; font-weight: 100; ">Đổi mật khẩu</h5>
-                        <div class="row" style=" width: 803px; margin-left: 2px; border-radius: 5px; margin-top: 20px;">
-                            <div class="form-group" style="margin-left: 50px; margin-top: 10px;  width: 300px;">
-                                <label>Mật khẩu cũ :</label>
-                                <br>
-                                <input type="password" class="form-control">
-                            </div>
-                            <div class="form-group" style="margin-left: 50px; margin-top: 10px;  width: 300px;">
-                                <label>Mật khẩu mới :</label>
-                                <br>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="form-group" style="margin-left: 50px; margin-top: 10px;  width: 300px;">
-                                <label>SDT :</label>
-                                <br>
-                                <input type="text" class="form-control" >
-                            </div>
-                            <br>
-                        </div>
-                        <div class="row" style="  width: 803px; margin-left: 2px; border-radius: 5px; margin-top: 20px;">
-                            <button class="btn btn-success" style="height: 50px; width: 100px;">Thay đổi</button>
-                        </div>
-
-                    </div>
-                </div>
-<!--                Setting Account End-->
 
 <!--                Address Begin-->
                 <div th:if="${pageAddressesUser}" class="card">
