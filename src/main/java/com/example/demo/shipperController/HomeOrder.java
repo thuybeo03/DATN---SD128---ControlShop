@@ -108,35 +108,28 @@ public class HomeOrder {
 
             if(!donViVanChuyen.equals("humanExpress")){
                 String maVanDonGH = request.getParameter("maVanDonGH");
-                Double phiGiaoHangGH = Double.parseDouble(request.getParameter("phiGiaoHangGH"));
                 if(donViVanChuyen.equals("ghn")){
                     giaoHang.setTenDVVC("Giao hàng nhanh");
-                    giaoHang.setPhiGiaoHang(phiGiaoHangGH);
                     giaoHang.setMaVanDon(maVanDonGH);
                 }
                 if(donViVanChuyen.equals("ghtk")){
                     giaoHang.setTenDVVC("Giao Hàng Tiết Kiệm");
-                    giaoHang.setPhiGiaoHang(phiGiaoHangGH);
                     giaoHang.setMaVanDon(maVanDonGH);
                 }
                 if(donViVanChuyen.equals("viettelPost")){
                     giaoHang.setTenDVVC("Viettel Post");
-                    giaoHang.setPhiGiaoHang(phiGiaoHangGH);
                     giaoHang.setMaVanDon(maVanDonGH);
                 }
                 if(donViVanChuyen.equals("ahamove")){
                     giaoHang.setTenDVVC("Ahamove");
-                    giaoHang.setPhiGiaoHang(phiGiaoHangGH);
                     giaoHang.setMaVanDon(maVanDonGH);
                 }
                 if(donViVanChuyen.equals("grab")){
                     giaoHang.setTenDVVC("Grab");
-                    giaoHang.setPhiGiaoHang(phiGiaoHangGH);
                     giaoHang.setMaVanDon(maVanDonGH);
                 }
                 if(donViVanChuyen.equals("be")){
                     giaoHang.setTenDVVC("Be");
-                    giaoHang.setPhiGiaoHang(phiGiaoHangGH);
                     giaoHang.setMaVanDon(maVanDonGH);
                 }
                 giaoHangService.saveGiaoHang(giaoHang);
@@ -304,8 +297,6 @@ public class HomeOrder {
 
         if (trangThaiHoan.equals("batDauHoan")){
             String maVanDonHoan = request.getParameter("maVanDonGH");
-            Double phiHoanHang = Double.parseDouble(request.getParameter("phiGiaoHangGH"));
-            giaoHang.setPhiHoanHang(phiHoanHang);
             giaoHang.setMaVanDonHoan(maVanDonHoan);
             giaoHang.setThoiGianHoan(new Date());
             giaoHangService.saveGiaoHang(giaoHang);

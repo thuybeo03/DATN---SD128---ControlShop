@@ -433,13 +433,6 @@
                                                             <input th:if="${HoaDonVanChuyen.giaoHang.tenDVVC == null}" name="maVanDonGH" id="maVanDon" class="form-control" type="text" >
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4 col-sm-12 col-12">
-                                                        <div class="form-group">
-                                                            <label>Phí giao hàng</label>
-                                                            <p th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" style="font-size: 11pt; font-weight: 600;" th:text="'₫'+${#numbers.formatDecimal(HoaDonVanChuyen.giaoHang.phiGiaoHang, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                                            <input th:if="${HoaDonVanChuyen.giaoHang.tenDVVC == null}" name="phiGiaoHangGH" id="phiGiaoHang" class="form-control" type="text" >
-                                                        </div>
-                                                    </div>
 
                                                     <div class="col-lg-4 col-sm-12 col-12">
                                                         <div class="form-group">
@@ -617,18 +610,6 @@
                                                     </div>
                                                     <div class="col-lg-4 col-sm-12 col-12">
                                                         <div class="form-group">
-                                                            <label style="font-size: 11pt; font-weight: 600;">Vị trí hiện tại :</label>
-                                                            <p>Đơn hàng đã đến Thanh Hóa</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-sm-12 col-12">
-                                                        <div class="form-group">
-                                                            <label style="font-size: 11pt; font-weight: 600;">Thời gian :</label>
-                                                            <p>01:03 2011/04/25</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-sm-12 col-12">
-                                                        <div class="form-group">
                                                             <label>Tên đơn vị vận chuyển</label>
                                                             <p th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" style="font-size: 11pt; font-weight: 600;" th:text="${HoaDonVanChuyen.giaoHang.tenDVVC}"></p>
                                                             <select th:if="${HoaDonVanChuyen.giaoHang.tenDVVC == null}" id="deliveryOptions" class="form-control" name="donViVanChuyen">
@@ -647,13 +628,6 @@
                                                             <label>Mã vận đơn:</label>
                                                             <p th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" style="font-size: 11pt; font-weight: 600;" th:text="${HoaDonVanChuyen.giaoHang.maVanDon}"></p>
                                                             <input th:if="${HoaDonVanChuyen.giaoHang.tenDVVC == null}" name="maVanDonGH" id="maVanDon" class="form-control" type="text" >
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-sm-12 col-12">
-                                                        <div class="form-group">
-                                                            <label>Phí giao hàng</label>
-                                                            <p th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" style="font-size: 11pt; font-weight: 600;" th:text="'₫'+${#numbers.formatDecimal(HoaDonVanChuyen.giaoHang.phiGiaoHang, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                                            <input th:if="${HoaDonVanChuyen.giaoHang.tenDVVC == null}" name="phiGiaoHangGH" id="phiGiaoHang" class="form-control" type="text" >
                                                         </div>
                                                     </div>
                                                     <div th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" style="border-top: 1px solid black;" class="col-lg-12 col-sm-12 col-12">
@@ -807,13 +781,7 @@
                                                             <input th:if="${HoaDonVanChuyen.giaoHang.maVanDonHoan == null}" name="maVanDonGH" id="maVanDon" class="form-control" type="text" >
                                                         </div>
                                                     </div>
-                                                    <div  th:if="${HoaDonVanChuyen.giaoHang.maVanDon != null}" class="col-lg-4 col-sm-12 col-12">
-                                                        <div class="form-group">
-                                                            <label>Phí hoàn hàng</label>
-                                                            <p th:if="${HoaDonVanChuyen.giaoHang.maVanDonHoan != null}" style="font-size: 11pt; font-weight: 600;" th:text="'₫'+${#numbers.formatDecimal(HoaDonVanChuyen.giaoHang.phiGiaoHang, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
-                                                            <input th:if="${HoaDonVanChuyen.giaoHang.maVanDonHoan == null}" name="phiGiaoHangGH" id="phiGiaoHang" class="form-control" type="number" >
-                                                        </div>
-                                                    </div>
+                                                     
                                                     <div th:if="${chuaBatDau}" class="col-lg-4 col-sm-12 col-12">
                                                         <div class="form-group">
                                                             <label>Trạng thái đơn hàng </label>
