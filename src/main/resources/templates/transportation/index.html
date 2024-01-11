@@ -446,18 +446,6 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-4 col-sm-12 col-12">
-                                                        <div th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" class="form-group">
-                                                            <label>Vị trí hiện tại :</label>
-                                                            <p style="font-size: 11pt; font-weight: 600;">Đơn hàng đã đến Thanh Hóa</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-sm-12 col-12">
-                                                        <div th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" class="form-group">
-                                                            <label>Thời gian đã giao :</label>
-                                                            <p style="font-size: 11pt; font-weight: 600;">01:03 2011/04/25</p>
-                                                        </div>
-                                                    </div>
 
                                                     <div style="border-top: 1px solid black;" class="col-lg-12 col-sm-12 col-12">
                                                         <div th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" class="form-group" style="display: flex;">
@@ -781,7 +769,7 @@
                                                             <input th:if="${HoaDonVanChuyen.giaoHang.maVanDonHoan == null}" name="maVanDonGH" id="maVanDon" class="form-control" type="text" >
                                                         </div>
                                                     </div>
-                                                     
+
                                                     <div th:if="${chuaBatDau}" class="col-lg-4 col-sm-12 col-12">
                                                         <div class="form-group">
                                                             <label>Trạng thái đơn hàng </label>
@@ -884,7 +872,6 @@
                                                     <th>Tổng SP</th>
                                                     <th>Tổng tiền</th>
                                                     <th>Thời gian thành công/hủy</th>
-                                                    <th>Hành động</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -905,11 +892,6 @@
                                                             <td th:text="${#dates.format(x.giaoHang.tgNhan, 'HH:mm yyyy-MM-dd')}" th:if="${x.trangThai == 3 }" style="color: #0875eb;" >Thành công</td>
                                                             <td th:text="${#dates.format(x.giaoHang.tgNhan, 'HH:mm yyyy-MM-dd')}" th:if="${x.trangThai == 4 }" style="color: #e01627;">Đã hủy</td>
 
-                                                            <th>
-                                                                <a th:if="${x.trangThai == 4 and x.giaoHang.trangThai == 2}" th:href="@{'/order/return/' + ${x.idHD}}">
-                                                                    <i style="margin-left: 20px; color: #0a53be" class="si si-reload" data-bs-toggle="tooltip" title="Hoàn hàng về kho"></i>
-                                                                </a>
-                                                            </th>
                                                         </tr>
                                                     </th:block>
                                                 </tbody>
