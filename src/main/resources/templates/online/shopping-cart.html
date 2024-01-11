@@ -423,7 +423,6 @@
             </div>
             <div>
               <div style="margin-bottom: 10px;">
-                <span style="margin-left: 85px; "> Nhấn <img src="/images/img/icon/mail.png" style="height: 15px; width: 20px; margin:0 10px 2px 10px;" alt=""> để nhận thông báo khi có hàng </span>
               </div>
               <div  class="radio-input">
 
@@ -436,14 +435,6 @@
                       <span th:text="${x.size.soSize}"></span>
                     </a>
 
-                    <a th:if="${x.trangThai == 0}" class="link" >
-                      <input type="">
-                      <span th:text="${x.size.soSize}"></span>
-                    </a>
-
-                    <a th:if="${x.trangThai == 0}" th:attr="onclick='receiveMail(event, \'' + ${x.idCTG} + '\')'" class="receiveMail">
-                      <img src="/images/img/icon/mail.png" style="height: 15px; width: 20px; margin-bottom: 2px; cursor: pointer;" alt="">
-                    </a>
                   </label>
 
                 </th:block>

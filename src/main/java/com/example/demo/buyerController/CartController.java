@@ -121,24 +121,47 @@ public class CartController {
     }
 
     @PostMapping("/cart/change/size")
-    private String changeSize(Model model,@RequestParam("selectedValues") List<UUID> selectedValues){
+    private String changeSize(Model model,@RequestParam("selectedValues") UUID selectedValues){
 
         ChiTietGiay chiTietGiay = (ChiTietGiay) session.getAttribute("ctgChangeSize");
-
-        UUID idCTGChangeSize = selectedValues.get(0);
-
-        ChiTietGiay chiTietGiayChangeSize = gctService.getByIdChiTietGiay(idCTGChangeSize);
-
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
 
+        UUID idCTGChangeSize = selectedValues;
+        ChiTietGiay chiTietGiayChangeSize = gctService.getByIdChiTietGiay(idCTGChangeSize);
+
         GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(chiTietGiay, gioHang);
+        GioHangChiTiet gioHangChiTiet2 = ghctService.findByCTGActiveAndKhachHangAndTrangThai(chiTietGiayChangeSize, gioHang);
 
-        gioHangChiTiet.setTgThem(new Date());
-        gioHangChiTiet.setChiTietGiay(chiTietGiayChangeSize);
-        gioHangChiTiet.setDonGia(gioHangChiTiet.getSoLuong()*chiTietGiay.getGiaBan());
-        ghctService.addNewGHCT(gioHangChiTiet);
 
-        showDataBuyer(model);
+        if (gioHangChiTiet2 != null){
+            System.out.println("Nhan ngu");
+            gioHangChiTiet2.setSoLuong(gioHangChiTiet2.getSoLuong() + gioHangChiTiet.getSoLuong());
+            gioHangChiTiet2.setDonGia((gioHangChiTiet2.getSoLuong() + gioHangChiTiet.getSoLuong())*chiTietGiayChangeSize.getGiaBan());
+            ghctService.addNewGHCT(gioHangChiTiet2);
+            ghctService.remove(gioHangChiTiet);
+        }else{
+            System.out.println("Nhan ngu bb");
+            gioHangChiTiet.setChiTietGiay(chiTietGiayChangeSize);
+            gioHangChiTiet.setDonGia(chiTietGiayChangeSize.getSoLuong()*chiTietGiayChangeSize.getGiaBan());
+            ghctService.addNewGHCT(gioHangChiTiet);
+
+        }
+
+        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+
+        List<GioHangChiTiet> listGHCTActive = ghctService.findByGHActive(gioHang);
+        Integer sumProductInCart = listGHCTActive.size();
+
+        if (listGHCTActive != null){
+            for (GioHangChiTiet gioHangChiTiett: listGHCTActive) {
+                gioHangChiTiet.setDonGia(gioHangChiTiett.getChiTietGiay().getGiaBan()* gioHangChiTiett.getSoLuong());
+                gioHangChiTiet.setDonGiaTruocKhiGiam(gioHangChiTiett.getChiTietGiay().getSoTienTruocKhiGiam()* gioHangChiTiett.getSoLuong());
+                ghctService.addNewGHCT(gioHangChiTiett);
+            }
+        }
+        model.addAttribute("fullNameLogin", khachHang.getHoTenKH());
+        model.addAttribute("sumProductInCart", sumProductInCart);
+        model.addAttribute("listCartDetail", listGHCTActive);
         return "/online/shopping-cart";
     }
 

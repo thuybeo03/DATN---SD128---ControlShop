@@ -387,14 +387,12 @@ public class HomeOrder {
         model.addAttribute("hoaDonDoneList",hoaDonDoneList);
         model.addAttribute("nameNhanVien",nhanVien.getHoTenNV());
     }
-
     private void showDataGH(Model model, HoaDon hoaDon){
         GiaoHang giaoHangListActive = hoaDon.getGiaoHang();
         model.addAttribute("showHTGH", "true");
         model.addAttribute("HoaDonVanChuyen", hoaDon);
         model.addAttribute("giaoHangListActive", giaoHangListActive);
     }
-
     private void showDataGHHH(Model model, HoaDon hoaDon){
         GiaoHang giaoHangListActive = hoaDon.getGiaoHang();
         model.addAttribute("showDonHangHoan", "true");
@@ -402,7 +400,6 @@ public class HomeOrder {
         model.addAttribute("giaoHangListActive", giaoHangListActive);
 
     }
-
     private void showDataTab1(Model model){
         model.addAttribute("activeAll", "nav-link active");
         model.addAttribute("activeVanChuyen", "nav-link");
@@ -411,7 +408,6 @@ public class HomeOrder {
         model.addAttribute("tabpane2", "tab-pane");
         model.addAttribute("tabpane3", "tab-pane");
     }
-
     private void showDataTab2(Model model){
         model.addAttribute("activeAll", "nav-link");
         model.addAttribute("activeVanChuyen", "nav-link active");
@@ -420,7 +416,6 @@ public class HomeOrder {
         model.addAttribute("tabpane2", "tab-pane show active");
         model.addAttribute("tabpane3", "tab-pane");
     }
-
     private void showDataTab3(Model model){
         model.addAttribute("activeAll", "nav-link");
         model.addAttribute("activeVanChuyen", "nav-link");
