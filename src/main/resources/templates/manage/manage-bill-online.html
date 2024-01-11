@@ -737,7 +737,7 @@
 
 <!--    Modal xem lịch sử thanh toán-->
     <th:block th:each="bill: ${listHoaDonOnline}">
-    <div class="modal fade" th:id="'modalXemLichSuThanhToan' + ${bill.idHD}" tabindex="-1" aria-labelledby="create" aria-hidden="true">
+    <div th:unless="${bill.trangThai == 6}" class="modal fade" th:id="'modalXemLichSuThanhToan' + ${bill.idHD}" tabindex="-1" aria-labelledby="create" aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-centered" role="document" style="width: 1200px;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -858,7 +858,7 @@
 
 <!-- Modal detail Hóa Đơn begin-->
     <th:block th:each="bill: ${listHoaDonOnline}">
-        <div class="modal fade" th:id="'modalDetailHD' + ${bill.idHD}" tabindex="-1" aria-labelledby="create" aria-hidden="true">
+        <div th:unless="${bill.trangThai == 6}" class="modal fade" th:id="'modalDetailHD' + ${bill.idHD}" tabindex="-1" aria-labelledby="create" aria-hidden="true">
             <div class="modal-dialog modal-xl modal-dialog-centered" role="document" style="width: 900px;">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -1002,7 +1002,7 @@
 
         <form th:action="'/manage/bill/online/cancel/refund/' + ${bill.idHD}" method="post">
             <div class="modal fade" th:id="'xacNhanHoanTienHDHuy' + ${bill.idHD}" tabindex="-1" aria-labelledby="create" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="width: 500px;">
+        <div th:unless="${bill.trangThai == 6}" class="modal-dialog modal-lg modal-dialog-centered" role="document" style="width: 500px;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Xác nhận hoàn tiền</h5>
@@ -1055,7 +1055,7 @@
     </th:block>
 
 <!-- Modal Xác nhận đã thanh toán Begin -->
-    <th:block th:each="bill: ${listHoaDonOnlineQRCode}">
+    <th:block th:unless="${bill.trangThai == 6}" th:each="bill: ${listHoaDonOnlineQRCode}">
         <div class="modal fade" th:id="'modalCofirmTT'+${bill.idHD}" tabindex="-1" aria-labelledby="create"
              aria-hidden="true">
             <form th:action="@{'/manage/bill/online/confirm/pay/' + ${bill.idHD}}" method="post">
