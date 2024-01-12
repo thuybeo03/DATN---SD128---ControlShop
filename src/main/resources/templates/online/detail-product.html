@@ -74,7 +74,17 @@
         flex-direction: column;
         text-align: center;
       }
-  </style>
+      .product__details__pic{
+        width: 50%;
+        float: left;
+        background-color:revert;
+      }
+      .product__details__text{
+        width: 171%;
+        margin-top: 40px;
+      }
+
+    </style>
 
 </head>
 
@@ -227,13 +237,13 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-lg-3 col-md-3">
+        <div class="row" style="margin-right: -150px">
+          <div class="col-lg-3 col-md-3" >
 
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
                   <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">
-                    <div style="border-radius:10px;" class="product__thumb__pic set-bg" th:attr="data-setbg=@{'/images/imgsProducts/' + ${hinhAnh.url1}}"></div>
+                    <div style="border-radius:10px; " class="product__thumb__pic set-bg" th:attr="data-setbg=@{'/images/imgsProducts/' + ${hinhAnh.url1}}"></div>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -294,55 +304,18 @@
               <h3 id="price-range" class="price-range" th:text="'₫' + ${#numbers.formatDecimal(minPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')} + ' ' + '-' + ' ₫' + ${#numbers.formatDecimal(maxPrice, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}" ></h3>
               <h3 id="price_product"></h3>
               <p th:text="${product.moTa}"></p>
-              <div style="display: flex; margin-left: 215px">
-                <p th:text="'Material : ' + ${product.chatLieu.tenChatLieu}"></p>
-                <p style="margin-left: 50px; margin-right: 50px">|</p>
-                <p th:text="'Brand : ' + ${product.hang.tenHang}"></p>
-              </div>
-
-              <span>Phân loại hàng :</span>
-              <br>
-              <span>----------------------------------</span>
-
-              <!--                  Nhan Ngu begin-->
-              <div th:if="${CTGByMoreMau}" class="radio-input">
-
-                <th:block th:each="x : ${listMauSacByGiay}">
-                  <label style="width: 200px; margin: 5px; font-weight: unset; font-size: small; height: 40px;" >
-                    <a class="link" th:href="@{'/buyer/shop-details/' + ${product.idGiay} + '/' + ${x.idMau} }" >
-                      <input type="radio" name="value-radio" >
-                      <span th:text="${x.tenMau}"></span>
-                    </a>
-                  </label>
-                </th:block>
-
-              </div>
-
-              <div th:if="${CTGBy1Mau}" class="radio-input">
-
-                <label style="width: 200px; margin: 5px; font-weight: unset; font-size: small; height: 40px;" >
-                  <a class="link" >
-                    <input type="radio" name="value-radio"  checked>
-                    <span th:text="${tenMau}" ></span>
-                  </a>
-                </label>
-
-              </div>
-              <!--                  Nhan Ngu end-->
 
               <div class="product__details__option 2">
                 <div class="product__details__option__size 2" style="margin-left: 50px">
-                  <span>Size :</span>
-                  <br>
-                  <span>----------------------------------</span>
+
                 </div>
               </div>
 
               <div class="product__details__option">
                 <div class="product__details__option__size" style="margin-left: 50px">
-                  <div class="label-container" style="display: flex; flex-wrap: wrap; justify-content: center; ">
+                  <div class="label-container" style="display: flex; flex-wrap: wrap; justify-content: center;width: 127%;margin-top: 12px;margin-left: -68px">
                     <th:block th:each="x : ${listSizeCTG}">
-                      <label th:unless="${x[2]}" th:name="${x[1]}" class="label" style="width: 200px; margin: 5px; font-weight: unset; font-size: small; height: 40px;"
+                      <label th:unless="${x[2]}" th:name="${x[1]}" class="label" style="width: 200px; margin: 5px; font-weight: unset; font-size: small; height: 40px   ;"
                              onclick="capNhatGia(event)" th:text="${x[0]}"></label>
                     </th:block>
 
@@ -375,13 +348,9 @@
               </div>
 
 
-              <div th:if="${heartLogged}" class="product__details__btns__option">
-                <a th:href="@{'/buyer/detail/heart/' + ${product.idGiay} + '/' + ${idHeartMau}}"><i class="fa fa-heart"></i>Thêm vào yêu thích</a>
-              </div>
 
-              <div class="product__details__last__option">
-                <h5><span>Thanh toán được đảm bảo</span></h5>
-              </div>
+
+
             </div>
           </div>
           </div>
@@ -391,9 +360,7 @@
             <div class="col-lg-12">
               <div class="product__details__tab">
                 <ul class="nav nav-tabs" role="tablist">
-                  <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#tabs-6" role="tab">Đánh giá</a>
-                  </li>
+
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane" id="tabs-6" role="tabpanel">
@@ -529,12 +496,7 @@
       <div class="col-lg-12 text-center">
         <div class="footer__copyright__text">
           <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          <p>Copyright ©
-            2023
-            All rights reserved | This template is edit with <i class="fa fa-heart-o"
-                                                                aria-hidden="true"></i> by <a
-                    href="https://www.instagram.com/nhanngu_03/" target="_blank">Nhan Pham</a>
-          </p>
+
           <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
         </div>
       </div>
