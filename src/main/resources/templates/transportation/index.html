@@ -443,39 +443,6 @@
                                                         </div>
                                                     </div>
 
-                                                    <div style="border-top: 1px solid black;" class="col-lg-12 col-sm-12 col-12">
-                                                        <div th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" class="form-group" style="display: flex;">
-                                                            <label style="font-size: 11pt; font-weight: 600;">Địa chỉ cập nhật:</label>
-                                                            <p style="color: red; font-size: 9pt; margin: 2px 0 0 20px;" th:text="'*Chuyển hàng tối đa 3 lần sẽ hoàn hàng về ( đã hủy ' + ${soLanHuy} + ' lần )' "> </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-sm-12 col-12">
-                                                        <div th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" class="form-group">
-                                                            <label style="font-size: 11pt; font-weight: 600;">Tỉnh :</label>
-                                                            <select class="select" id="city" name="city" style="width: 220px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                                            font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;  ">
-                                                                <option value="" selected>Chọn thành phố</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" class="col-lg-4 col-sm-12 col-12">
-                                                        <div class="form-group">
-                                                            <label style="font-size: 11pt; font-weight: 600;">Quận/Huyện :</label>
-                                                            <select class="select" id="district" name="district" style="width: 220px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
-                                                                <option value="" selected>Chọn quận/huyện</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-sm-12 col-12">
-                                                        <div th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" class="form-group">
-                                                            <label style="font-size: 11pt; font-weight: 600;">Phường Xã :</label>
-                                                            <select class="select" id="ward" name="ward" style="width: 220px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
-                                                                <option value="" selected>Chọn phường xã</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
                                                     <div class="col-lg-12 col-sm-12 col-12">
                                                         <div class="form-group">
                                                             <label style="font-size: 11pt; font-weight: 600;">Mô tả :</label>
@@ -612,39 +579,6 @@
                                                             <label>Mã vận đơn:</label>
                                                             <p th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" style="font-size: 11pt; font-weight: 600;" th:text="${HoaDonVanChuyen.giaoHang.maVanDon}"></p>
                                                             <input th:if="${HoaDonVanChuyen.giaoHang.tenDVVC == null}" name="maVanDonGH" id="maVanDon" class="form-control" type="text" >
-                                                        </div>
-                                                    </div>
-                                                    <div th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" style="border-top: 1px solid black;" class="col-lg-12 col-sm-12 col-12">
-                                                        <div class="form-group" style="display: flex; margin-top: 15px;">
-                                                            <label style="font-size: 11pt; font-weight: 600;">Địa chỉ cập nhật:</label>
-                                                            <p style="color: red; font-size: 9pt; margin: 2px 0 0 20px;"> *Lấy hàng tối đa 3 lần không được sẽ hủy đơn hàng hoàn </p>
-                                                        </div>
-                                                    </div>
-                                                    <div th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" class="col-lg-4 col-sm-12 col-12">
-                                                        <div class="form-group">
-                                                            <label style="font-size: 11pt; font-weight: 600;">Tỉnh :</label>
-                                                            <select class="select" id="city" name="city" style="width: 220px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                                            font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;  ">
-                                                                <option value="" selected>Chọn thành phố</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" class="col-lg-4 col-sm-12 col-12">
-                                                        <div class="form-group">
-                                                            <label style="font-size: 11pt; font-weight: 600;">Quận/Huyện :</label>
-                                                            <select class="select" id="district" name="district" style="width: 220px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
-                                                                <option value="" selected>Chọn quận/huyện</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" class="col-lg-4 col-sm-12 col-12">
-                                                        <div class="form-group">
-                                                            <label style="font-size: 11pt; font-weight: 600;">Phường Xã :</label>
-                                                            <select class="select" id="ward" name="ward" style="width: 220px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
-                                                                <option value="" selected>Chọn phường xã</option>
-                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div th:if="${HoaDonVanChuyen.giaoHang.tenDVVC != null}" class="col-lg-12 col-sm-12 col-12">
@@ -785,38 +719,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div th:if="${daBatDau}" style="border-top: 1px solid black;" class="col-lg-12 col-sm-12 col-12">
-                                                        <div  class="form-group" style="display: flex;">
-                                                            <label style="font-size: 11pt; font-weight: 600;">Địa chỉ cập nhật:</label>
-                                                        </div>
-                                                    </div>
-                                                    <div th:if="${daBatDau}" class="col-lg-4 col-sm-12 col-12">
-                                                        <div class="form-group">
-                                                            <label style="font-size: 11pt; font-weight: 600;">Tỉnh :</label>
-                                                            <select class="select" id="city" name="city" style="width: 220px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                                            font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;  ">
-                                                                <option value="" selected>Chọn thành phố</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div th:if="${daBatDau}" class="col-lg-4 col-sm-12 col-12">
-                                                        <div class="form-group">
-                                                            <label style="font-size: 11pt; font-weight: 600;">Quận/Huyện :</label>
-                                                            <select class="select" id="district" name="district" style="width: 220px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
-                                                                <option value="" selected>Chọn quận/huyện</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div th:if="${daBatDau}" class="col-lg-4 col-sm-12 col-12">
-                                                        <div class="form-group">
-                                                            <label style="font-size: 11pt; font-weight: 600;">Phường Xã :</label>
-                                                            <select class="select" id="ward" name="ward" style="width: 220px; height:40px; border: 1px solid rgba(145, 158, 171, .32); border-radius: 5px;
-                                                                font-weight: 500; font-size: 14px; color: #637381; padding: 10px 15px;">
-                                                                <option value="" selected>Chọn phường xã</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
+
                                                     <div class="col-lg-12 col-sm-12 col-12">
                                                         <div class="form-group">
                                                             <label style="font-size: 11pt; font-weight: 600;">Mô tả :</label>
@@ -1038,13 +941,9 @@
     function luuThayDoi() {
         var selectedOption = document.getElementById("deliveryOptions").value;
         var maVanDon = document.getElementById("maVanDon").value;
-        var phiGiaoHang = document.getElementById("phiGiaoHang").value;
-
-        if (selectedOption !== "humanExpress") {
-            if (maVanDon === "" || phiGiaoHang === "") {
-                alert("Bạn cần nhập mã vận đơn và phí giao hàng khi chọn đơn vị vận chuyển .");
-                event.preventDefault()
-            }
+        if (maVanDon === "") {
+            alert("Bạn cần nhập mã vận đơn khi chọn đơn vị vận chuyển .");
+            event.preventDefault()
         }
 
         // Thực hiện các thay đổi khác hoặc gửi dữ liệu đi nếu cần

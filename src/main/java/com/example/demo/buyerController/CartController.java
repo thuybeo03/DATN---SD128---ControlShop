@@ -132,7 +132,6 @@ public class CartController {
         GioHangChiTiet gioHangChiTiet = ghctService.findByCTGActiveAndKhachHangAndTrangThai(chiTietGiay, gioHang);
         GioHangChiTiet gioHangChiTiet2 = ghctService.findByCTGActiveAndKhachHangAndTrangThai(chiTietGiayChangeSize, gioHang);
 
-
         if (gioHangChiTiet2 != null){
             System.out.println("Nhan ngu");
             gioHangChiTiet2.setSoLuong(gioHangChiTiet2.getSoLuong() + gioHangChiTiet.getSoLuong());
@@ -144,7 +143,6 @@ public class CartController {
             gioHangChiTiet.setChiTietGiay(chiTietGiayChangeSize);
             gioHangChiTiet.setDonGia(chiTietGiayChangeSize.getSoLuong()*chiTietGiayChangeSize.getGiaBan());
             ghctService.addNewGHCT(gioHangChiTiet);
-
         }
 
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
