@@ -349,40 +349,29 @@
                     <div class="table-responsive">
                         <table class="table datanew" id="data-table">
                             <thead>
-                            <tr>
-                                <th>
-                                    <label class="checkboxs">
-                                        <input type="checkbox" id="select-all"/>
-                                        <span class="checkmarks"></span>
-                                    </label>
-                                </th>
-                                <th>Mã Khách Hàng</th>
-                                <th>Tên Khách Hàng</th>
-                                <th>Email Khách Hàng</th>
-                                <th>Mật Khẩu</th>
-                                <th>Trạng Thái</th>
-                                <th>Loại Khách Hàng</th>
-                                <th>Thời Gian Thêm</th>
-                                <th>Thời Gian Sửa</th>
-                                <th>Action</th>
-                            </tr>
+                                <tr>
+                                    <th>Mã Khách Hàng</th>
+                                    <th>Tên Khách Hàng</th>
+                                    <th>Email Khách Hàng</th>
+                                    <th>Mật Khẩu</th>
+                                    <th>Thời Gian Thêm</th>
+                                    <th>Thời Gian Sửa</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Action</th>
+                                </tr>
                             </thead>
                             <tbody>
                             <tr th:each="items : ${khachHang}">
-                                <td>
-                                    <label class="checkboxs">
-                                        <input type="checkbox">
-                                        <span class="checkmarks"></span>
-                                    </label>
-                                </td>
 
                                 <td th:text="${items.maKH}"></td>
                                 <td th:text="${items.hoTenKH}"></td>
                                 <td th:text="${items.emailKH}"></td>
                                 <td th:text="${items.matKhau}"></td>
-
                                 <td th:text="${#dates.format(items.tgThem, 'dd-MM-yyyy')}" align="center"/>
                                 <td th:text="${#dates.format(items.tgSua, 'dd-MM-yyyy')}" align="center"/>
+
+                                <td th:if="${items.trangThai == 1 }"> Đang HD</td>
+                                <td th:if="${items.trangThai == 0 }"> Không HD</td>
                                 <td>
                                     <a class="me-3" th:href="@{'/manage/khach-hang/detail/' + ${items.idKH}}">
                                         <img src="/images/img/icons/eye.svg" alt="img"/>
