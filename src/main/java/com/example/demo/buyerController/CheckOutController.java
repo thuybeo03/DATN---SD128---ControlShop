@@ -325,6 +325,12 @@ public class CheckOutController {
             ghctService.addNewGHCT(gioHangChiTiet);
 
             ChiTietGiay chiTietGiay = xx.getChiTietGiay();
+
+            int a = chiTietGiay.getSoLuong() - xx.getSoLuong();
+            if(a == 0 || a <= 0){
+                chiTietGiay.setTrangThai(0);
+            }
+
             chiTietGiay.setSoLuong(chiTietGiay.getSoLuong() - xx.getSoLuong());
             giayChiTietService.save(chiTietGiay);
         }
@@ -387,6 +393,118 @@ public class CheckOutController {
             return "online/user";
         }
 
+
+    }
+
+    @GetMapping("/buyer/shop/buyNowButton")
+    private String buyNow(@RequestParam("idDetailProduct") UUID idDProduct, @RequestParam("quantity") int quantity, Model model){
+
+        ChiTietGiay ctg = giayChiTietService.getByIdChiTietGiay(idDProduct);
+
+        KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
+        GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
+
+        DiaChiKH diaChiKHDefault = diaChiKHService.findDCKHDefaulByKhachHang(khachHang);
+        List<DiaChiKH> diaChiKHList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, false, 1);
+
+        Date date = new Date();
+        HoaDon hoaDon = new HoaDon();
+
+        String maHD = "HD_" + khachHang.getMaKH() + "_" + date.getDate() + generateRandomNumbers();
+
+        hoaDon.setKhachHang(khachHang);
+        hoaDon.setMaHD(maHD);
+        hoaDon.setLoaiHD(0);
+        hoaDon.setTgTao(date);
+        hoaDon.setTrangThai(6);
+        hoaDonService.add(hoaDon);
+
+        GiaoHang giaoHang = new GiaoHang();
+        giaoHang.setHoaDon(hoaDon);
+        giaoHangService.saveGiaoHang(giaoHang);
+        hoaDon.setGiaoHang(giaoHang);
+        hoaDonService.add(hoaDon);
+
+        if (diaChiKHDefault != null){
+            session.removeAttribute("diaChiGiaoHang");
+            session.setAttribute("diaChiGiaoHang", diaChiKHDefault);
+
+            giaoHang.setTenNguoiNhan(diaChiKHDefault.getTenNguoiNhan());
+            giaoHang.setMaGiaoHang("");
+            giaoHang.setSdtNguoiNhan(diaChiKHDefault.getSdtNguoiNhan());
+            giaoHang.setDiaChiNguoiNhan(diaChiKHDefault.getDiaChiChiTiet());
+
+            giaoHangService.saveGiaoHang(giaoHang);
+            hoaDonService.add(hoaDon);
+        }
+
+        HoaDonChiTiet hoaDonChiTiet = new HoaDonChiTiet();
+        hoaDonChiTiet.setHoaDon(hoaDon);
+        hoaDonChiTiet.setChiTietGiay(ctg);
+        hoaDonChiTiet.setDonGia(ctg.getGiaBan());
+        hoaDonChiTiet.setSoLuong(quantity);
+        hoaDonChiTiet.setTgThem(new Date());
+        hoaDonChiTiet.setTrangThai(1);
+
+        hoaDonChiTietService.add(hoaDonChiTiet);
+
+        List<HoaDonChiTiet> listHDCTCheckOut = new ArrayList<>();
+        listHDCTCheckOut.add(hoaDonChiTiet);
+
+        int sumQuantity = quantity;
+
+        double total = quantity* ctg.getGiaBan();
+
+        hoaDon.setTongSP(sumQuantity);
+        hoaDon.setTongTienSanPham(total);
+
+        hoaDonService.add(hoaDon);
+
+        GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
+        gioHangChiTiet.setChiTietGiay(ctg);
+        gioHangChiTiet.setGioHang(gioHang);
+        gioHangChiTiet.setDonGia(ctg.getGiaBan()* quantity);
+        gioHangChiTiet.setSoLuong(quantity);
+        gioHangChiTiet.setTrangThai(1);
+        gioHangChiTiet.setChiTietGiay(ctg);
+        gioHangChiTiet.setTgThem(new Date());
+        ghctService.addNewGHCT(gioHangChiTiet);
+
+        model.addAttribute("sumQuantity", sumQuantity);
+        model.addAttribute("total", total);
+        model.addAttribute("listProductCheckOut", listHDCTCheckOut);
+        model.addAttribute("toTalOder", total);
+
+        if (diaChiKHDefault != null){
+            Double shippingFee = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
+            hoaDon.setTongTien(total + shippingFee);
+            hoaDon.setTienShip(shippingFee);
+            hoaDonService.add(hoaDon);
+
+            giaoHang.setDiaChiNguoiNhan(diaChiKHDefault.getDiaChiChiTiet());
+            giaoHang.setSdtNguoiNhan(diaChiKHDefault.getSdtNguoiNhan());
+            giaoHang.setTenNguoiNhan(diaChiKHDefault.getTenNguoiNhan());
+            giaoHangService.saveGiaoHang(giaoHang);
+
+            model.addAttribute("shippingFee", shippingFee);
+            model.addAttribute("billPlaceOrder", hoaDon);
+            model.addAttribute("toTalOder", total  + shippingFee );
+            model.addAttribute("tongTienDaGiamVoucherShip", total + shippingFee);
+            model.addAttribute("diaChiKHDefault", diaChiKHDefault);
+            model.addAttribute("addNewAddressNotNull", true);
+            model.addAttribute("listAddressKH", diaChiKHList);
+        }else{
+            model.addAttribute("tongTienDaGiamVoucherShip", total);
+            model.addAttribute("addNewAddressNulll", true);
+            model.addAttribute("addNewAddressNull", true);
+        }
+
+        session.removeAttribute("hoaDonTaoMoi");
+
+        session.setAttribute("hoaDonTaoMoi", hoaDon);
+
+        showData(model);
+        return "online/checkout";
 
     }
 

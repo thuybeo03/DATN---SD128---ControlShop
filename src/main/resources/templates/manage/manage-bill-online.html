@@ -413,6 +413,7 @@
                                                             <table class="table  datanew ">
                                                                 <thead>
                                                                 <tr>
+                                                                    <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">STT</th>
                                                                     <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;"> Mã Hóa Đơn </th>
                                                                     <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;"> Thời gian tạo </th> 
                                                                     <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;"> Trạng thái </th>
@@ -423,8 +424,9 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                <th:block th:each="bill: ${listHoaDonOnline}">
+                                                                <th:block th:each="bill, x: ${listHoaDonOnline}">
                                                                     <tr th:unless="${bill.trangThai == 6}">
+                                                                        <td th:text="${x.index}"></td>
                                                                         <td th:text="${bill.maHD}"></td>
                                                                         <td th:text="${#dates.format(bill.tgTao, 'HH:mm yyyy-MM-dd')}"></td>
 
@@ -479,6 +481,7 @@
                                                             <table class="table  datanew ">
                                                                 <thead>
                                                                 <tr>
+                                                                    <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">STT</th>
                                                                     <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">Mã Hóa Đơn</th>
                                                                     <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">Nhân viên giao</th>
                                                                     <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">Thời gian tạo</th>
@@ -490,8 +493,9 @@
                                                                 </thead>
                                                                 <tbody>
 
-                                                                <th:block th:each="bill: ${listHoaDonOnlineGiaoHang}">
+                                                                <th:block th:each="bill, i: ${listHoaDonOnlineGiaoHang}">
                                                                     <tr>
+                                                                        <td th:text="${i.index}"></td>
                                                                         <td th:text="${bill.maHD}"></td>
                                                                         <td th:if="${bill.nhanVien != null}" th:text="${bill.nhanVien.hoTenNV}"></td>
                                                                         <td th:unless="${bill.nhanVien != null}">Chưa có NV</td>
@@ -541,6 +545,7 @@
                                                             <table class="table  datanew ">
                                                                 <thead>
                                                                 <tr>
+                                                                    <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">STT</th>
                                                                     <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">Mã Hóa Đơn</th>
                                                                     <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">Hình thức thanh toán</th>
                                                                     <th style="position: sticky; top: 0;background-color: #ff9f43; color: white;">Thời gian tạo</th>
@@ -553,9 +558,10 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                <th:block th:each="bill: ${listHoaDonOnline}">
+                                                                <th:block th:each="bill, i: ${listHoaDonOnline}">
                                                                     <tr th:if="${bill.trangThai == 3 or bill.trangThai == 4}">
 
+                                                                        <td th:text="${i.index}"></td>
                                                                         <td th:text="${bill.maHD}"></td>
 
                                                                         <td th:if="${bill.hinhThucThanhToan == 1}">VNPAY</td>

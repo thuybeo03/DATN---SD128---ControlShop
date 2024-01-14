@@ -172,6 +172,9 @@ public class CartController {
 
         if (listGHCTActive != null){
             for (GioHangChiTiet gioHangChiTiet: listGHCTActive) {
+                if(gioHangChiTiet.getSoLuong() > gioHangChiTiet.getChiTietGiay().getSoLuong()){
+                    gioHangChiTiet.setSoLuong(gioHangChiTiet.getChiTietGiay().getSoLuong());
+                }
                 gioHangChiTiet.setDonGia(gioHangChiTiet.getChiTietGiay().getGiaBan()* gioHangChiTiet.getSoLuong());
                 gioHangChiTiet.setDonGiaTruocKhiGiam(gioHangChiTiet.getChiTietGiay().getSoTienTruocKhiGiam()* gioHangChiTiet.getSoLuong());
                 ghctService.addNewGHCT(gioHangChiTiet);

@@ -291,6 +291,7 @@
                                             <table class="table  datanew ">
                                                 <thead>
                                                     <tr>
+                                                        <th>STT</th>
                                                         <th>Mã Hóa Đơn</th>
                                                         <th>Thời gian tạo</th> 
                                                         <th>Thanh Toán</th>
@@ -302,9 +303,9 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <th:block th:each="x: ${allHoaDonList}">
-
-                                                        <tr >
+                                                    <th:block th:each="x, i: ${hoaDonDGList}">
+                                                        <tr>
+                                                            <td th:text="${i.index}"></td>
                                                             <td th:text="${x.maHD}"></td>
                                                             <td th:text="${#dates.format(x.tgTao, 'HH:mm yyyy-MM-dd')}"></td>
  
@@ -617,6 +618,7 @@
                                                     <table class="table  datanew ">
                                                         <thead>
                                                             <tr>
+                                                                <th style="position: sticky; top: 0;background-color: #209de3; color: white;">STT</th>
                                                                 <th style="position: sticky; top: 0;background-color: #209de3; color: white;">Mã Hóa Đơn</th>
                                                                 <th style="position: sticky; top: 0;background-color: #209de3; color: white;">Thời gian tạo</th>
                                                                 <th style="position: sticky; top: 0;background-color: #209de3; color: white;">Trạng thái</th>
@@ -627,8 +629,9 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <th:block th:each="x: ${hoaDonDGList}">
+                                                        <th:block th:each="x, i: ${hoaDonDGList}">
                                                             <tr>
+                                                                <td th:text="${i.index}"></td>
                                                                 <td th:text="${x.maHD}"></td>
                                                                 <td th:text="${x.tgTao}"></td>
                                                                 <td th:if="${x.giaoHang.tenDVVC == null}">Chưa lấy/gửi hàng</td>
@@ -764,6 +767,7 @@
                                             <table class="table  datanew ">
                                                 <thead>
                                                 <tr>
+                                                    <th>STT</th>
                                                     <th>Mã Hóa Đơn</th>
                                                     <th>Thời gian tạo</th>
                                                     <th>Trạng thái</th>
@@ -774,8 +778,9 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <th:block th:each="x: ${allHoaDonList}">
+                                                    <th:block th:each="x, i: ${allHoaDonList}">
                                                         <tr th:unless="${x.trangThai == 1 or x.trangThai == 2 or x.trangThai == 5 or x.trangThai == 6}">
+                                                            <td th:text="${i.index}"></td>
                                                             <td th:text="${x.maHD}"></td>
                                                             <td th:text="${x.tgTao}"></td>
 
@@ -788,8 +793,8 @@
 
                                                             <td th:text="'₫'+${#numbers.formatDecimal(x.tongTien, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></td>
 
-                                                            <td th:text="${#dates.format(x.giaoHang.tgNhan, 'HH:mm yyyy-MM-dd')}" th:if="${x.trangThai == 3 }" style="color: #0875eb;" >Thành công</td>
-                                                            <td th:text="${#dates.format(x.giaoHang.tgNhan, 'HH:mm yyyy-MM-dd')}" th:if="${x.trangThai == 4 }" style="color: #e01627;">Đã hủy</td>
+                                                            <td th:text="${#dates.format(x.giaoHang.tgNhan, 'HH:mm yyyy-MM-dd')}" th:if="${x.trangThai == 3 }" style="color: #0875eb;" ></td>
+                                                            <td th:text="${#dates.format(x.giaoHang.tgHuy, 'HH:mm yyyy-MM-dd')}" th:if="${x.trangThai == 4 }" style="color: #e01627;"></td>
 
                                                         </tr>
                                                     </th:block>
