@@ -332,22 +332,16 @@ public class UserController {
         }else if (trangThai == 2){
 
             GiaoHang giaoHangListActive = hoaDon.getGiaoHang();
-            model.addAttribute("giaoHangListActive", giaoHangListActive);
-
             List<ViTriDonHang> viTriDonHangList = viTriDonHangServices.findByGiaoHang(giaoHangListActive);
-            model.addAttribute("listViTriDonHang", viTriDonHangList);
 
+            model.addAttribute("listViTriDonHang", viTriDonHangList);
             model.addAttribute("detailBillRecieve",true);
             model.addAttribute("billDetailRecieve", hoaDon);
 
-
-
         }else if (trangThai == 3){
             GiaoHang giaoHangListActive = hoaDon.getGiaoHang();
-//            Date ngayBatDau =  hoaDon.getTgThanhToan();
 
             Calendar calendar = Calendar.getInstance();
-//            calendar.setTime(ngayBatDau);
 
             calendar.add(Calendar.DATE, 2);
 
