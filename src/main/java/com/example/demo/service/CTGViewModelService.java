@@ -11,9 +11,6 @@ import java.util.UUID;
 public interface CTGViewModelService {
     List<CTGViewModel> getAll();
 
-//    List<CTGViewModel> getAllProductPromotion();
-//
-//    List<CTGViewModel> getAllProductNonPromotion();
 
     Page<CTGViewModel> getAllPage(Pageable pageable);
 

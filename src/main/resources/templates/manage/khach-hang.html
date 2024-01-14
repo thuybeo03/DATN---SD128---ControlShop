@@ -356,16 +356,9 @@
                                         <span class="checkmarks"></span>
                                     </label>
                                 </th>
-                                <th>Ảnh Khách Hàng</th>
-                                <th>Ảnh CCCD</th>
                                 <th>Mã Khách Hàng</th>
                                 <th>Tên Khách Hàng</th>
-                                <th>Giới Tính</th>
-                                <th>Ngày Sinh</th>
-                                <th>Sdt Khách Hàng</th>
                                 <th>Email Khách Hàng</th>
-                                <th>Địa Chỉ</th>
-                                <th>Căn Cước Công Dân</th>
                                 <th>Mật Khẩu</th>
                                 <th>Trạng Thái</th>
                                 <th>Loại Khách Hàng</th>
@@ -382,31 +375,12 @@
                                         <span class="checkmarks"></span>
                                     </label>
                                 </td>
-                                <td><img width="80px" height="90px"
-                                         th:src="@{'/images/imgsKhachHang/Avatar/'+ ${items.AnhKH}}"></td>
-                                <td><img width="80px" height="90px"
-                                         th:src="@{'/images/imgsKhachHang/CCCD/'+ ${items.Anhcccd}}"></td>
+
                                 <td th:text="${items.maKH}"></td>
                                 <td th:text="${items.hoTenKH}"></td>
-                                <td>
-                                    <div th:switch="${items.gioiTinh}">
-                                        <p th:case="1">Nam</p>
-                                        <p th:case="0">Nữ</p>
-                                        <p th:case="2">Khác</p>
-                                    </div>
-                                </td>
-                                <td th:text="${#dates.format(items.ngaySinh, 'yyyy-MM-dd')}"/>
-                                <td th:text="${items.sdtKH}"></td>
                                 <td th:text="${items.emailKH}"></td>
-                                <td th:text="${items.diaChi}"></td>
-                                <td th:text="${items.CCCDKH}"></td>
                                 <td th:text="${items.matKhau}"></td>
-                                <td>
-                                    <p th:if="${items.trangThai == 1}" class="badges bg-lightgreen">Hoạt Động</p>
-                                    <p th:unless="${items.trangThai == 1}" class="badges bg-lightred">Không Hoạt
-                                        Động</p>
-                                </td>
-                                <td th:text="${items.loaiKhachHang.tenLKH}"></td>
+
                                 <td th:text="${#dates.format(items.tgThem, 'dd-MM-yyyy')}" align="center"/>
                                 <td th:text="${#dates.format(items.tgSua, 'dd-MM-yyyy')}" align="center"/>
                                 <td>

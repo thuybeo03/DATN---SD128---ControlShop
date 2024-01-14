@@ -99,44 +99,48 @@ public class AuthController {
                 return "online/login";
             }
         }else{
-            KhachHang kh  = khachHangService.checkLoginSDT(username, password);
-            if (kh != null){
-                GioHang gh = gioHangService.findByKhachHang(kh);
-
-                if (gh != null){
-                    String fullName = kh.getHoTenKH();
-
-                    model.addAttribute("fullNameLogin", fullName);
-                    session.setAttribute("KhachHangLogin", kh);
-                    session.setAttribute("GHLogged", gh);
-                    return "redirect:/buyer/";
-                }
-
-
-                GioHang gioHang = new GioHang();
-                gioHang.setKhachHang(kh);
-                gioHang.setTrangThai(1);
-                gioHang.setTgThem(date);
-                gioHangService.saveGH(gioHang);
-                session.setAttribute("GHLogged", gioHang);
-
-                return "redirect:/buyer/";
-
-            }else{
-                GioHang gh = gioHangService.findByKhachHang(kh);
-                if (gh != null){
-                    GioHang gioHang = new GioHang();
-                    gioHang.setKhachHang(kh);
-                    gioHang.setTrangThai(1);
-                    gioHang.setTgThem(date);
-                    gioHangService.saveGH(gh);
-                    model.addAttribute("messageLogin", "Username or Password incorrect");
-                    return "online/login";
-                }
-                model.addAttribute("messageLogin", "Username or Password incorrect");
-                return "online/login";
-            }
+            model.addAttribute("messageLogin", "Username or Password incorrect");
+            return "online/login";
         }
+//        else{
+//            KhachHang kh  = khachHangService.checkLoginSDT(username, password);
+//            if (kh != null){
+//                GioHang gh = gioHangService.findByKhachHang(kh);
+//
+//                if (gh != null){
+//                    String fullName = kh.getHoTenKH();
+//
+//                    model.addAttribute("fullNameLogin", fullName);
+//                    session.setAttribute("KhachHangLogin", kh);
+//                    session.setAttribute("GHLogged", gh);
+//                    return "redirect:/buyer/";
+//                }
+//
+//
+//                GioHang gioHang = new GioHang();
+//                gioHang.setKhachHang(kh);
+//                gioHang.setTrangThai(1);
+//                gioHang.setTgThem(date);
+//                gioHangService.saveGH(gioHang);
+//                session.setAttribute("GHLogged", gioHang);
+//
+//                return "redirect:/buyer/";
+//
+//            }else{
+//                GioHang gh = gioHangService.findByKhachHang(kh);
+//                if (gh != null){
+//                    GioHang gioHang = new GioHang();
+//                    gioHang.setKhachHang(kh);
+//                    gioHang.setTrangThai(1);
+//                    gioHang.setTgThem(date);
+//                    gioHangService.saveGH(gh);
+//                    model.addAttribute("messageLogin", "Username or Password incorrect");
+//                    return "online/login";
+//                }
+//                model.addAttribute("messageLogin", "Username or Password incorrect");
+//                return "online/login";
+//            }
+//        }
     }
 
 

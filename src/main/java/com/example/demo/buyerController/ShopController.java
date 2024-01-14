@@ -45,7 +45,7 @@ public class ShopController {
     private HttpServletRequest request;
 
     @PostMapping("/search")
-    private String searchBuyer(Model model){
+    private String searchBuyer(Model model) {
         checkKhachHangLogged(model);
         List<CTGViewModel> listCTGModelNew = ctgViewModelService.getAll();
         String keyWord = request.getParameter("keyWord");
@@ -54,14 +54,14 @@ public class ShopController {
         List<CTGViewModel> ctgViewModelList = new ArrayList<>();
 
         for (String word : words) {
-            for (CTGViewModel xx:listCTGModelNew) {
-                if (xx.getTenGiay().toLowerCase().contains(word.toLowerCase())){
+            for (CTGViewModel xx : listCTGModelNew) {
+                if (xx.getTenGiay().toLowerCase().contains(word.toLowerCase())) {
                     ctgViewModelList.add(xx);
                 }
             }
         }
 
-        if (ctgViewModelList.size() == 0){
+        if (ctgViewModelList.size() == 0) {
             model.addAttribute("khongThay", true);
         }
 
@@ -74,8 +74,8 @@ public class ShopController {
 
     @GetMapping("/shop")
     private String getShopBuyer(Model model,
-                                @RequestParam(name= "pageSize", defaultValue = "9") Integer pageSize,
-                                @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum){
+                                @RequestParam(name = "pageSize", defaultValue = "9") Integer pageSize,
+                                @RequestParam(name = "pageNum", required = false, defaultValue = "1") Integer pageNum) {
         showDataBuyerShop(model);
         checkKhachHangLogged(model);
 
@@ -93,7 +93,7 @@ public class ShopController {
     }
 
     @GetMapping("/shop/best")
-    private String getShopBuyerBestSeller(Model model){
+    private String getShopBuyerBestSeller(Model model) {
 
         checkKhachHangLogged(model);
 
@@ -109,7 +109,7 @@ public class ShopController {
     }
 
     @GetMapping("/shop/new")
-    private String getShopBuyerNew(Model model){
+    private String getShopBuyerNew(Model model) {
 
         checkKhachHangLogged(model);
 
@@ -122,32 +122,8 @@ public class ShopController {
 
         showDataBuyerShop(model);
         return "online/shop";
-    }
 
-//    @GetMapping("/shop/sale")
-//    private String getShopBuyerSale(Model model){
-//
-//        checkKhachHangLogged(model);
-//
-//        List<CTGViewModel> listCTGModelSoldOff = ctgViewModelService.getAllSoldOff();
-//        List<CTGViewModel> listCTGModelNew = ctgViewModelService.getAllOrderTgNhap();
-//
-//        List<CTGViewModel> ctgViewModelList = new ArrayList<>();
-//
-//        for (CTGViewModel xx:listCTGModelNew) {
-//            if (xx.getTenKM() != null){
-//                ctgViewModelList.add(xx);
-//            }
-//        }
-//
-//        model.addAttribute("listCTGModelSoldOff", listCTGModelSoldOff);
-//        model.addAttribute("pageNumber", true);
-//        model.addAttribute("listCTGModel", ctgViewModelList);
-//
-//        showDataBuyerShop(model);
-//        return "online/shop";
-//    }
-
+}
     @GetMapping("/shop/price/type=1")
     private String getShopPriceType1(Model model){
 
@@ -284,28 +260,7 @@ public class ShopController {
         return "online/shop";
     }
 
-    @GetMapping("/shop/color/{idMau}")
-    private String getShopColorBuyer(Model model,@PathVariable UUID idMau){
 
-        checkKhachHangLogged(model);
-        List<CTGViewModel> listCTGModelSoldOff = ctgViewModelService.getAllSoldOff();
-        List<CTGViewModel> listCTGModelNew = ctgViewModelService.getAllOrderTgNhap();
-
-        List<CTGViewModel> ctgViewModelList = new ArrayList<>();
-
-        for (CTGViewModel xx:listCTGModelNew) {
-            if (idMau.equals(xx.getIdMau())){
-                ctgViewModelList.add(xx);
-            }
-        }
-
-        model.addAttribute("listCTGModelSoldOff", listCTGModelSoldOff);
-        model.addAttribute("pageNumber", true);
-        model.addAttribute("listCTGModel", ctgViewModelList);
-
-        showDataBuyerShop(model);
-        return "online/shop";
-    }
 
     @GetMapping("/shop/highToLow")
     private String getShopByPriceHighToLow(Model model,
@@ -317,7 +272,7 @@ public class ShopController {
 
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
         Page<CTGViewModel> page = ctgViewModelService.getAllByPriceHighToLow(pageable);
-
+        System.out.println(page);
         model.addAttribute("totalPageHTL", page.getTotalPages());
         model.addAttribute("listCTGModel", page.getContent());
 
@@ -367,12 +322,6 @@ public class ShopController {
 
         List<CTGViewModel> ctgViewModelList = new ArrayList<>();
 
-//        for (CTGViewModel xx:listCTGModelNew) {
-//            if (xx.getTenKM() != null){
-//                ctgViewModelList.add(xx);
-//            }
-//        }
-//        model.addAttribute("sumProductSale", ctgViewModelList.size());
     }
 
     private void checkKhachHangLogged(Model model){
