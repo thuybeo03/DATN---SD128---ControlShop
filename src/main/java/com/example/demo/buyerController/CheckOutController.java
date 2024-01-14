@@ -404,6 +404,26 @@ public class CheckOutController {
         KhachHang khachHang = (KhachHang) session.getAttribute("KhachHangLogin");
         GioHang gioHang = (GioHang) session.getAttribute("GHLogged") ;
 
+        GioHangChiTiet gioHangChiTiet =  ghctService.findByCTGActiveAndKhachHangAndTrangThai(ctg, gioHang);
+
+        if (gioHangChiTiet == null){
+            gioHangChiTiet.setChiTietGiay(ctg);
+            gioHangChiTiet.setGioHang(gioHang);
+            gioHangChiTiet.setDonGia(ctg.getGiaBan()* quantity);
+            gioHangChiTiet.setSoLuong(quantity);
+            gioHangChiTiet.setTrangThai(1);
+            gioHangChiTiet.setChiTietGiay(ctg);
+            gioHangChiTiet.setTgThem(new Date());
+            ghctService.addNewGHCT(gioHangChiTiet);
+        }else{
+            gioHangChiTiet.setDonGia(gioHangChiTiet.getDonGia() + ctg.getGiaBan()* quantity);
+            gioHangChiTiet.setSoLuong(quantity + gioHangChiTiet.getSoLuong());
+            gioHangChiTiet.setTrangThai(1);
+            gioHangChiTiet.setChiTietGiay(ctg);
+            gioHangChiTiet.setTgThem(new Date());
+            ghctService.addNewGHCT(gioHangChiTiet);
+        }
+
         DiaChiKH diaChiKHDefault = diaChiKHService.findDCKHDefaulByKhachHang(khachHang);
         List<DiaChiKH> diaChiKHList = diaChiKHService.findbyKhachHangAndLoaiAndTrangThai(khachHang, false, 1);
 
@@ -459,16 +479,6 @@ public class CheckOutController {
         hoaDon.setTongTienSanPham(total);
 
         hoaDonService.add(hoaDon);
-
-        GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
-        gioHangChiTiet.setChiTietGiay(ctg);
-        gioHangChiTiet.setGioHang(gioHang);
-        gioHangChiTiet.setDonGia(ctg.getGiaBan()* quantity);
-        gioHangChiTiet.setSoLuong(quantity);
-        gioHangChiTiet.setTrangThai(1);
-        gioHangChiTiet.setChiTietGiay(ctg);
-        gioHangChiTiet.setTgThem(new Date());
-        ghctService.addNewGHCT(gioHangChiTiet);
 
         model.addAttribute("sumQuantity", sumQuantity);
         model.addAttribute("total", total);
