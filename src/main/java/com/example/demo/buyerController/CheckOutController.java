@@ -213,7 +213,9 @@ public class CheckOutController {
                 .sum();
 
         Double shippingFee = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
+
         hoaDon.setTongTien(total + shippingFee);
+
         hoaDonService.add(hoaDon);
 
         GiaoHang giaoHang = hoaDon.getGiaoHang();
@@ -222,6 +224,11 @@ public class CheckOutController {
         giaoHang.setTenNguoiNhan(diaChiKH.getTenNguoiNhan());
         giaoHangService.saveGiaoHang(giaoHang);
 
+        hoaDon.setTienShip(shippingFee);
+        hoaDonService.add(hoaDon);
+
+        Double shippingFee2 = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
+
         model.addAttribute("sumQuantity", sumQuantity);
         model.addAttribute("total", total);
         model.addAttribute("diaChiKHDefault", diaChiKH);
@@ -229,7 +236,7 @@ public class CheckOutController {
         model.addAttribute("listAddressKH", diaChiKHList);
         model.addAttribute("addNewAddressNotNull", true);
         model.addAttribute("billPlaceOrder", hoaDon);
-        model.addAttribute("shippingFee", shippingFee);
+        model.addAttribute("shippingFee", shippingFee2);
         model.addAttribute("toTalOder", total  + shippingFee );
 
         session.removeAttribute("diaChiGiaoHang");
@@ -269,6 +276,7 @@ public class CheckOutController {
         Double shippingFee = shippingFeeService.calculatorShippingFee(hoaDon, 25000.0);
 
         hoaDon.setTongTien(total + shippingFee);
+        hoaDon.setTienShip(shippingFee);
         hoaDonService.add(hoaDon);
 
         model.addAttribute("sumQuantity", sumQuantity);
@@ -283,8 +291,6 @@ public class CheckOutController {
 
         session.removeAttribute("diaChiGiaoHang");
         session.setAttribute("diaChiGiaoHang", diaChiKHChange);
-
-
 
         showData(model);
 

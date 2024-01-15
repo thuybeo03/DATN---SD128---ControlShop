@@ -629,68 +629,6 @@
 </script>
 
 
-
-
-
-<!--<script>-->
-<!--  document.addEventListener("DOMContentLoaded", function() {-->
-<!--    const labels = document.querySelectorAll(".label");-->
-<!--    const priceElement = document.querySelector("#price_product");-->
-<!--    const priceRange = document.querySelector(".price-range");-->
-<!--    const sumRemind = document.querySelector(".sum-remind");-->
-<!--    const quantityRemindElement = document.querySelector("#quantity_remind");-->
-<!--    const idDetailProduct = document.querySelector("#idDetailProduct");-->
-
-<!--    labels.forEach(label => {-->
-<!--      label.addEventListener("click", function() {-->
-<!--        const selectedInput = label.querySelector("input[type='radio']");-->
-<!--        const price = selectedInput.getAttribute("data-price");-->
-<!--        const remind = selectedInput.getAttribute("data-remind");-->
-<!--        const idDP = selectedInput.getAttribute("data-idProduct");-->
-
-<!--        priceElement.innerHTML = "$"+price;-->
-<!--        quantityRemindElement.innerHTML = remind;-->
-<!--        idDetailProduct.value = idDP;-->
-
-<!--        // Kiểm tra và ẩn/hiển thị khoảng giá-->
-<!--        const minMaxPrice = <%=(Boolean) request.getAttribute("minMaxPrice")%>;-->
-<!--                if (minMaxPrice) {-->
-<!--                    priceRange.style.display = "none"; // Ẩn khoảng giá-->
-<!--                } else {-->
-<!--                    priceRange.style.display = "block"; // Hiển thị khoảng giá-->
-<!--                }-->
-
-<!--                // Kiểm tra và ẩn/hiển thị sản phẩmt còn lại-->
-<!--                const remindPrtoduct = <%=(Boolean) request.getAttribute("remindProduct")%>;-->
-<!--                if (remindPrtoduct) {-->
-<!--                    sumRemind.style.display = "none"; // Ẩn khoảng giá-->
-<!--                } else {-->
-<!--                    sumRemind.style.display = "block"; // Hiển thị khoảng giá-->
-<!--                }-->
-<!--            });-->
-<!--        });-->
-<!--    });-->
-<!--</script>-->
-
-<!--<script>-->
-<!--  var quantityInput = document.getElementById("quantityInput");-->
-<!--  var maxQuantity = quantityInput.getAttribute("data-max-quantity");-->
-
-<!--  quantityInput.addEventListener("input", function() {-->
-<!--    var enteredValue = Number(quantityInput.value);-->
-
-<!--    if (isNaN(enteredValue)) {-->
-<!--      alert("Quantity must is number");-->
-<!--    } else if (enteredValue > maxQuantity) {-->
-<!--      quantityInput.value = maxQuantity;-->
-<!--      alert("You have reached the maximum quantity available for this item");-->
-<!--    }-->
-<!--  });-->
-<!--</script>-->
-
-<!-- Js Plugins -->
-
-
 <script src="/js/feather.min.js"></script>
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script src="/js/script.js"></script><script src="/js/jquery-3.3.1.min.js"></script>
