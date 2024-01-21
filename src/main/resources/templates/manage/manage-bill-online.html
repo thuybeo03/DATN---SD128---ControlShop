@@ -827,7 +827,8 @@
                         </div>
                         <div class="col-lg-2 col-sm-12 col-12">
                             <div class="form-group">
-                                <p  th:text="'₫'+${#numbers.formatDecimal(x.soTienThanhToan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
+<!--                                <p  th:text="'₫'+${#numbers.formatDecimal(x.soTienThanhToan, 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>-->
+                                <p  th:text="'₫'+${#numbers.formatDecimal((x.soTienThanhToan ?: 0), 0, 'COMMA', 2, 'POINT').replaceAll('([,.])0+$', '$1').replaceAll('\\.$', '')}"></p>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-12 col-12">

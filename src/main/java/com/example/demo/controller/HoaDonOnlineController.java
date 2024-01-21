@@ -16,7 +16,7 @@ import java.util.*;
 
 @RequestMapping("/manage/bill/")
 @Controller
-public class HoaDonOnlineController {
+public class  HoaDonOnlineController {
 
     @Autowired
     private HoaDonChiTietService hoaDonChiTietService;

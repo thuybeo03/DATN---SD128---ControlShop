@@ -413,6 +413,7 @@ public class CheckOutController {
         GioHangChiTiet gioHangChiTiet =  ghctService.findByCTGActiveAndKhachHangAndTrangThai(ctg, gioHang);
 
         if (gioHangChiTiet == null){
+            gioHangChiTiet = new GioHangChiTiet();
             gioHangChiTiet.setChiTietGiay(ctg);
             gioHangChiTiet.setGioHang(gioHang);
             gioHangChiTiet.setDonGia(ctg.getGiaBan()* quantity);
